@@ -34,7 +34,7 @@ void registrarEmpleado()
         cedulas.push_back(cedula);
         generarContrasena(contrasena);
         contraseñas.push_back(contrasena);
-
+        cout << "La contraseña del empleado es:"<< contrasena << endl;
     }
 }
 
