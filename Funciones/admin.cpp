@@ -114,3 +114,33 @@ void editarEmpleado()
         break;
     }
 }
+
+void eliminarEmpleado()
+{
+    buscarEmpleado();
+    int opcion;
+    cout << "¿Estas seguro de que deseas eliminar este empleado?" << endl;
+    cout << "1. Si";
+    cout << "2. No";
+    cout << "Elige tu opcion: ";
+    cin >> opcion;
+
+    switch (opcion)
+    {
+    case 1:
+        nombres.erase(nombres.begin() + i);
+        apellidos.erase(apellidos.begin() + i);
+        cedulas.erase(cedulas.begin() + i);
+        contraseñas.erase(contraseñas.begin() + i);
+
+        cout << "Empleado eliminado" << endl;
+
+        break;
+
+    case 2:
+        break;
+    default:
+        cout << "Opcion no valida" << endl;
+        break;
+    }
+}
