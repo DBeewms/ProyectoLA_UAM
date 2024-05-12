@@ -2,6 +2,7 @@
 #include "inicioSesion.cpp"
 #include "personas.cpp"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
