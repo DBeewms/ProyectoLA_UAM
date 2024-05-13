@@ -1,8 +1,7 @@
 #include "informes.cpp"
-#include "inicioSesion.cpp"
-#include "personas.cpp"
 #include <iostream>
 #include <string>
+#define sizePass 5
 
 using namespace std;
 
@@ -12,10 +11,25 @@ int i = 0;
 void registrarEmpleado();
 // Editar empleados
 void editarEmpleado();
-// Buscar empleados
-void buscarEmpleado();
 // Eliminar empleados
 void eliminarEmpleado();
+
+void imprimirDatosEmpleado();
+
+void generarContrasena(char *contrasena);
+
+
+void generarContrasena(char *contrasena)
+{
+    srand(time(0));
+    for (int i = 0; i < sizePass; i++)
+    {
+        int num = rand() % 10;
+        contrasena[i] = '0' + num;
+    }
+    contrasena[sizePass] = '\0';
+}
+
 
 void registrarEmpleado()
 {
@@ -36,37 +50,25 @@ void registrarEmpleado()
         cin >> cedula;
         cedulas.push_back(cedula);
         generarContrasena(contrasena);
-        contraseñas.push_back(contrasena);
+        claves.push_back(contrasena);
         cout << "La contraseña del empleado es:" << contrasena << endl;
     }
 }
 
-void buscarEmpleado()
-{
-    string cedula;
-    cout << "Ingrese la cedula del empleado que desea buscar: ";
-    cin >> cedula;
 
-    for (i < cedulas.size(); i++;)
-    {
-        if (cedulas[i] == cedula)
-        {
-            cout << "Nombre: " << nombres[i] << endl;
-            cout << "Apellido: " << apellidos[i] << endl;
-            cout << "Cedula: " << cedulas[i] << endl;
-            cout << "Contraseña: " << contraseñas[i] << endl;
-            break;
-        }
-        else
-        {
-            cout << "Empleado no encontrado" << endl;
-        }
-    }
+void imprimirDatosEmpleado()
+{
+    cout << "Nombre: " << nombres[i] << endl;
+    cout << "Apellido: " << apellidos[i] << endl;
+    cout << "Cedula: " << cedulas[i] << endl;
+    cout << "Contraseña: " << claves[i] << endl;
 }
+
 
 void editarEmpleado()
 {
     buscarEmpleado();
+    imprimirDatosEmpleado();
     int opcion;
     cout << "¿Que deseas editar?" << endl;
     cout << "1. Nombre ";
@@ -101,11 +103,11 @@ void editarEmpleado()
         break;
 
     case 4:
-        cout << "La contraseña actual es: " << contraseñas[i] << endl;
+        cout << "La contraseña actual es: " << claves[i] << endl;
         char contrasena[sizePass];
         generarContrasena(contrasena);
-        contraseñas[i] = contrasena;
-        cout << "La nueva contraseña es: " << contraseñas[i] << endl;
+        claves[i] = contrasena;
+        cout << "La nueva contraseña es: " << claves[i] << endl;
         break;
 
     case 5:
@@ -119,6 +121,7 @@ void editarEmpleado()
 void eliminarEmpleado()
 {
     buscarEmpleado();
+    imprimirDatosEmpleado();
     int opcion;
     cout << "¿Estas seguro de que deseas eliminar este empleado?" << endl;
     cout << "1. Si";
@@ -132,7 +135,7 @@ void eliminarEmpleado()
         nombres.erase(nombres.begin() + i);
         apellidos.erase(apellidos.begin() + i);
         cedulas.erase(cedulas.begin() + i);
-        contraseñas.erase(contraseñas.begin() + i);
+        claves.erase(claves.begin() + i);
 
         cout << "Empleado eliminado" << endl;
 
