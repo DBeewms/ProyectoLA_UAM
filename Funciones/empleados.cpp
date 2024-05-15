@@ -3,6 +3,8 @@
 #include <chrono>
 #include <ctime>
 
+int anio, mes, dias;
+
 using namespace std;
 
 int i = 0;
@@ -27,22 +29,27 @@ void iniciarSesionEmpleado()
 
 void registrarAsistencia()
 {
-
-    switch (expression)
+    if (mes >= 1 && mes <= 12)
     {
-    case /* constant-expression */:
-        /* code */
-        break;
-    
-    default:
-        break;
+        if (dias <= calcularDiasMes(mes, anio) && dias > 0)
+        {
+            if (zeller(anio, mes, dias) == 6 && zeller(anio, mes, dias) == 7)
+            {
+                cout << "Este dia es fin de semana" << endl;
+            }
+            else
+            {
+                iniciarSesionEmpleado();
+                cout << "Nombre: " << nombres[i] << endl;
+                cout << "Apellido: " << apellidos[i] << endl;
+                cout << "Cedula: " << cedulas[i] << endl;
+                
+            }
+        }
     }
-    
-    cout << "Nombre: " << nombres[i] << endl;
-    cout << "Apellido: " << apellidos[i] << endl;
-    cout << "Cedula: " << cedulas[i] << endl;
-
 }
+
+
 
 // Uso de la funcion generarContrasena
 
