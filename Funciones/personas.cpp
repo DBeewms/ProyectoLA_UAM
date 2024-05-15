@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <chrono>
+#include <ctime>
 
 using namespace std;
 
@@ -8,7 +10,7 @@ using namespace std;
 void buscarEmpleado();
 
 vector<int> asistencias;
-vector<int> tarde;
+vector<int> llegadaTarde;
 vector<string> nombres;
 vector<string> apellidos;
 vector<string> cedulas;
