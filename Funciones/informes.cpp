@@ -2,56 +2,107 @@
 #include <iostream>
 #include <chrono>
 #include <ctime>
-
-int anio, mes, dias;
-
-//Guarda la fecha como string en un vector
-
-/*
-#include <iostream>
-#include <chrono>
-#include <ctime>
+#include <iomanip> // put_time
 #include <vector>
+#include <sstream> // ostringstream
 
 using namespace std;
+using namespace chrono;
 
-vector<string> asistencias;
+void pedirFecha();
+pair<time_t, time_t> ingresarEntradaSalida();
+void registrarAsistencia(time_t horaEntrada_t);
+time_t calcularHorasExtra(time_t horaSalida_t);
 
-int main(int argc, char const *argv[])
+int zeller(int anio, int mes, int dia);
+int calcularDiasMes(int mes, int anio);
+
+pair<time_t, time_t> ingresarEntradaSalida()
 {
-    auto start = chrono::system_clock::now();
-    time_t start_time = chrono::system_clock::to_time_t(start);
-    cout << "La hora UTC es: " << ctime(&start_time);
+    // Tomar el punto actual del calendario del sistema
+    auto now = system_clock::now();
 
-    asistencias.push_back(ctime(&start_time));
+    // Convertir a time_t que representa el tiempo del calendario
+    time_t now_time_t = system_clock::to_time_t(now);
 
-    cout << asistencias[0] << endl;
+    // Convierte a un estrucutra tm que representa la fecha y tiempo de un calendario
+    tm *now_tm = localtime(&now_time_t);
 
-    return 0;
+    // Pedir hora de entrada y de salida
+    string horaEntrada_str, horaSalida_str;
+    cout << "Define la hora de entrada y salida..." << endl;
+    cout << "Hora de entrada (HH:MM:SS): ";
+    cin >> horaEntrada_str;
+    cout << "Hora de salida (HH:MM:SS): ";
+    cin >> horaSalida_str;
+
+    // Parsear la hora de entrada y salida a tm
+    tm horaEntrada_tm = *now_tm, horaSalida_tm = *now_tm;
+    stringstream horaEntrada_ss(horaEntrada_str), horaSalida_ss(horaSalida_str);
+    horaEntrada_ss >> get_time(&horaEntrada_tm, "%H:%M:%S");
+    horaSalida_ss >> get_time(&horaSalida_tm, "%H:%M:%S");
+
+    // Parsear las estructuras tm devuelta a time_t
+    time_t horaEntrada_t = mktime(&horaEntrada_tm);
+    time_t horaSalida_t = mktime(&horaSalida_tm);
+
+    return make_pair(horaEntrada_t, horaSalida_t);
 }
-*/
 
-
-void registrarFecha()
+void registrarAsistencia(time_t horaEntrada_t, time_t horaSalida_t)
 {
-    cout << "Ingresa el año: ";
-    cin >> anio;
-    cout << "Ingresa el mes: ";
-    cin >> mes;
-    cout << "Ingresa el dia: ";
-    cin >> dias;
+    // Tomar el punto actual del calendario del sistema
+    auto now = system_clock::now();
 
-    if (mes >= 1 && mes <= 12)
+    // Convertir a time_t que representa el tiempo del calendario
+    time_t now_time_t = system_clock::to_time_t(now);
+
+    // Convierte a un estrucutra tm que representa la fecha y tiempo de un calendario
+    tm *now_tm = localtime(&now_time_t);
+
+    // Crea un stringstream para formatear la fecha
+    ostringstream date_stream_fecha;
+    date_stream_fecha << put_time(now_tm, "%d-%m-%Y");
+    // Save the formatted date as a string
+    string formatted_date = date_stream_fecha.str();
+
+    // Crea un stringstream para formatear la hora
+    ostringstream date_stream_hora;
+    date_stream_hora << put_time(now_tm, "%H:%M:%S");
+    // Save the formatted date as a string
+    string formatted_hora = date_stream_hora.str();
+
+    // Tomar el formato de la hora local para el calculo de la diferencia
+    tm formatoHoraActual_tm = *now_tm;
+    stringstream formatoHoraActual_ss(formatted_hora);
+    formatoHoraActual_ss >> get_time(&formatoHoraActual_tm, "%H:%M:%S");
+
+    // Parsear las estructuras tm devuelta a time_t
+    time_t formatoHoraActual_t = mktime(&formatoHoraActual_tm);
+
+    // Calcula la diferencia en segundos
+    double diferenciaSegundos = difftime(formatoHoraActual_t, horaEntrada_t);
+
+    // Convierte a minutos
+    double diferenciaMinutos = (diferenciaSegundos / 60);
+
+    // Lapso de tiempo de 5 min para la tolerancia
+    double tolerancia = 5.0;
+
+    if (diferenciaMinutos <= tolerancia)
     {
-        if (dias <= calcularDiasMes(mes, anio) && dias > 0)
-        {
-            cout << "Fecha: " << dias << "/" << mes << "/" << anio << endl;
-            cout << "Fecha actualizada" << endl;
-        }
+        // Guardar la asistencia en el vector
+        //Asisgencia en tiempo
+        fechas.push_back(formatted_date);
+        horas.push_back(formatted_hora);
+        asistencias.push_back(1);
     }
     else
     {
-        cout << "Fecha incorrecta" << endl;
+        // Llegada tarde
+        fechas.push_back(formatted_date);
+        horas.push_back(formatted_hora);
+        llegadaTarde.push_back(1);
     }
 }
 
@@ -120,6 +171,5 @@ int calcularDiasMes(int mes, int anio)
     default:
         break;
     }
-
     return dias;
 }

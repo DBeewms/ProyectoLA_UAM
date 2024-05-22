@@ -3,18 +3,15 @@
 #include <string>
 #include <chrono>
 #include <ctime>
+#include "personas.h"
 
 using namespace std;
+using namespace chrono;
 
 // Buscar empleados
 void buscarEmpleado();
 
-vector<int> asistencias;
-vector<int> llegadaTarde;
-vector<string> nombres;
-vector<string> apellidos;
-vector<string> cedulas;
-vector<string> claves;
+// ACTUALIZAR BUSCAR EMPLEADO
 
 int i = 0;
 
