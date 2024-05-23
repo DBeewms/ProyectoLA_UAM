@@ -99,16 +99,18 @@ void registrarEmpleado()
         nuevoEmpleado.clave = contrasena;
         cout << "La contraseña del empleado es:" << contrasena << endl;
     }
+    empleados.push_back(nuevoEmpleado);
 }
 
 // ACTUALIZAR SIGUIENDO LA ESTRUCTURA DE LA SIGUIENTE FUNCION
 
 void imprimirDatosEmpleado()
 {
-    cout << "Nombre: " << nombres[i] << endl;
-    cout << "Apellido: " << apellidos[i] << endl;
-    cout << "Cedula: " << cedulas[i] << endl;
-    cout << "Contraseña: " << claves[i] << endl;
+    int index = buscarEmpleado();
+    cout << "Nombre: " << empleados[index].nombre << endl;
+    cout << "Apellido: " << empleados[index].apellido << endl;
+    cout << "Cedula: " << empleados[index].cedula << endl;
+    cout << "Contraseña: " << empleados[index].clave << endl;
 }
 
 // void imprimirAsistencia() {
@@ -144,32 +146,32 @@ void editarEmpleado()
         switch (opcion)
         {
         case 1:
-            cout << "El nombre actual es: " << nombres[i] << endl;
+            cout << "El nombre actual es: " << empleados[index].nombre << endl;
             cout << "Ingrese el nuevo nombre: ";
-            cin >> nombres[i];
-            cout << "El nuevo nombre es: " << nombres[i] << endl;
+            cin >> empleados[index].nombre;
+            cout << "El nuevo nombre es: " << empleados[index].nombre << endl;
             break;
 
         case 2:
-            cout << "El apellido actual es: " << apellidos[i] << endl;
+            cout << "El apellido actual es: " << empleados[index].apellido << endl;
             cout << "Ingrese el nuevo apellido: ";
-            cin >> apellidos[i];
-            cout << "El nuevo apellido es: " << apellidos[i] << endl;
+            cin >> empleados[index].apellido;
+            cout << "El nuevo apellido es: " << empleados[index].apellido << endl;
             break;
 
         case 3:
-            cout << "La cedula actual es: " << cedulas[i] << endl;
+            cout << "La cedula actual es: " << empleados[index].cedula << endl;
             cout << "Ingrese la nueva cedula: ";
-            cin >> cedulas[i];
-            cout << "La nueva cedula es: " << cedulas[i] << endl;
+            cin >> empleados[index].cedula;
+            cout << "La nueva cedula es: " << empleados[index].cedula << endl;
             break;
 
         case 4:
-            cout << "La contraseña actual es: " << claves[i] << endl;
+            cout << "La contraseña actual es: " << empleados[index].clave << endl;
             char contrasena[sizePass];
             generarContrasena(contrasena);
-            claves[i] = contrasena;
-            cout << "La nueva contraseña es: " << claves[i] << endl;
+            empleados[index].clave = contrasena;
+            cout << "La nueva contraseña es: " << empleados[index].clave << endl;
             break;
 
         case 5:
@@ -183,31 +185,30 @@ void editarEmpleado()
 
 void eliminarEmpleado()
 {
-    buscarEmpleado();
+    int index = buscarEmpleado();
     imprimirDatosEmpleado();
     int opcion;
-    cout << "¿Estas seguro de que deseas eliminar este empleado?" << endl;
-    cout << "1. Si";
-    cout << "2. No";
-    cout << "Elige tu opcion: ";
-    cin >> opcion;
-
-    switch (opcion)
+    if (index > -1)
     {
-    case 1:
-        nombres.erase(nombres.begin() + i);
-        apellidos.erase(apellidos.begin() + i);
-        cedulas.erase(cedulas.begin() + i);
-        claves.erase(claves.begin() + i);
+        cout << "¿Estas seguro de que deseas eliminar este empleado?" << endl;
+        cout << "1. Si";
+        cout << "2. No";
+        cout << "Elige tu opcion: ";
+        cin >> opcion;
 
-        cout << "Empleado eliminado" << endl;
-
-        break;
-
-    case 2:
-        break;
-    default:
-        cout << "Opcion no valida" << endl;
-        break;
+        switch (opcion)
+        {
+        case 1:
+            empleados.erase(empleados.begin() + index);
+            cout << "Empleado eliminado" << endl;
+            system("pause");
+            break;
+        case 2:
+            break;
+        default:
+            cout << "Opcion no valida" << endl;
+            system("pause");
+            break;
+        }
     }
 }
