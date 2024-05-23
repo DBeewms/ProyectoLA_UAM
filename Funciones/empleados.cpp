@@ -8,29 +8,41 @@ int anio, mes, dias;
 using namespace std;
 
 int i = 0;
-
+void imprimirDatosEmpleadoEnEmpleados();
 void registrarAsistencia(time_t horaEntrada_t);
+
+void imprimirDatosEmpleadoEnEmpleados()
+{
+    int index = buscarEmpleado();
+    cout << "Nombre: " << empleados[index].nombre << endl;
+    cout << "Apellido: " << empleados[index].apellido << endl;
+    cout << "Cedula: " << empleados[index].cedula << endl;
+}
 
 void iniciarSesionEmpleado()
 {
+    int index = buscarEmpleado();
     char contrasena[sizePass];
-    buscarEmpleado();
 
-    cout << "Ingrese la contraseña: ";
-    cin >> contrasena;
+    if (index > -1)
+    {
+        cout << "Ingrese la contraseña: ";
+        cin >> contrasena;
 
-    if (claves[i] == contrasena)
-    {
-        cout << "Sesion iniciada" << endl;
-    }
-    else
-    {
-        cout << "Contraseña incorrecta" << endl;
+        if (empleados[index].clave == contrasena)
+        {
+            cout << "Sesion iniciada" << endl;
+        }
+        else
+        {
+            cout << "Contraseña incorrecta" << endl;
+        }
     }
 }
 
 void registrarAsistencia(time_t horaEntrada_t)
 {
+    int index = buscarEmpleado();
     // Tomar el punto actual del calendario del sistema
     auto now = system_clock::now();
 
@@ -73,19 +85,18 @@ void registrarAsistencia(time_t horaEntrada_t)
     {
         // Guardar la asistencia en el vector
         // Asisgencia en tiempo
-        nuevoEmpleado.fechas.push_back(formatted_date);
-        nuevoEmpleado.horas.push_back(formatted_hora);
-        nuevoEmpleado.asistencias.push_back(1);
-        nuevoEmpleado.llegadaTarde.push_back(0);
+        empleados[index].fechas.push_back(formatted_date);
+        empleados[index].horas.push_back(formatted_hora);
+        empleados[index].asistencias.push_back(1);
+        empleados[index].llegadaTarde.push_back(0);
     }
     else
     {
         // Llegada tarde
-        nuevoEmpleado.fechas.push_back(formatted_date);
-        nuevoEmpleado.horas.push_back(formatted_hora);
-        nuevoEmpleado.asistencias.push_back(1);
-        nuevoEmpleado.llegadaTarde.push_back(1);
+        empleados[index].fechas.push_back(formatted_date);
+        empleados[index].horas.push_back(formatted_hora);
+        empleados[index].asistencias.push_back(1);
+        empleados[index].llegadaTarde.push_back(1);
     }
-
-    empleados.push_back(nuevoEmpleado);
+    
 }
