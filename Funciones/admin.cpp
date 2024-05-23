@@ -1,6 +1,7 @@
 #include "informes.cpp"
 #include <iostream>
 #include <string>
+#include <vector>
 #define sizePass 5
 
 using namespace std;
@@ -19,10 +20,7 @@ using namespace std;
 // horaEntrada_t = horasEntradaSalida.first;
 // horaSalida_t = horasEntradaSalida.second;
 
-
-int i = 0;
-
-//ACTUALIZAR FUNCIONES SIGUIENDO LA ESTRUCTURA PERSONA
+// ACTUALIZAR FUNCIONES SIGUIENDO LA ESTRUCTURA PERSONA
 
 // Registrar empleados
 void registrarEmpleado();
@@ -35,7 +33,6 @@ void imprimirDatosEmpleado();
 void generarContrasena(char *contrasena);
 
 pair<time_t, time_t> ingresarEntradaSalida();
-
 
 pair<time_t, time_t> ingresarEntradaSalida()
 {
@@ -82,7 +79,7 @@ void generarContrasena(char *contrasena)
 
 void registrarEmpleado()
 {
-    string nombre, apellido, cedula;
+    string nombreEmpleado, apellidoEmpleado, cedulaEmpleado;
     char contrasena[sizePass];
     int j;
     for (int i = 0; i < j; i++)
@@ -90,16 +87,16 @@ void registrarEmpleado()
         cout << "Cuantos empleados desea registrar? ";
         cin >> j;
         cout << "Ingrese el nombre del empleado: ";
-        cin >> nombre;
-        nombres.push_back(nombre);
+        cin >> nombreEmpleado;
+        nuevoEmpleado.nombre = nombreEmpleado;
         cout << "Ingrese el apellido del empleado: ";
-        cin >> apellido;
-        apellidos.push_back(apellido);
+        cin >> apellidoEmpleado;
+        nuevoEmpleado.apellido = apellidoEmpleado;
         cout << "Ingrese la cedula del empleado: ";
-        cin >> cedula;
-        cedulas.push_back(cedula);
+        cin >> cedulaEmpleado;
+        nuevoEmpleado.cedula = cedulaEmpleado;
         generarContrasena(contrasena);
-        claves.push_back(contrasena);
+        nuevoEmpleado.clave = contrasena;
         cout << "La contraseña del empleado es:" << contrasena << endl;
     }
 }
@@ -128,57 +125,59 @@ void imprimirDatosEmpleado()
 //     }
 // }
 
-
 void editarEmpleado()
 {
-    buscarEmpleado();
+    int index = buscarEmpleado();
     imprimirDatosEmpleado();
     int opcion;
-    cout << "¿Que deseas editar?" << endl;
-    cout << "1. Nombre ";
-    cout << "2. Apellido";
-    cout << "3. Cedula";
-    cout << "4. Contraseña";
-    cout << "5. Salir";
-    cout << "Elige tu opcion: ";
-    cin >> opcion;
-
-    switch (opcion)
+    if (index > -1)
     {
-    case 1:
-        cout << "El nombre actual es: " << nombres[i] << endl;
-        cout << "Ingrese el nuevo nombre: ";
-        cin >> nombres[i];
-        cout << "El nuevo nombre es: " << nombres[i] << endl;
-        break;
+        cout << "¿Que deseas editar?" << endl;
+        cout << "1. Nombre ";
+        cout << "2. Apellido";
+        cout << "3. Cedula";
+        cout << "4. Contraseña";
+        cout << "5. Salir";
+        cout << "Elige tu opcion: ";
+        cin >> opcion;
 
-    case 2:
-        cout << "El apellido actual es: " << apellidos[i] << endl;
-        cout << "Ingrese el nuevo apellido: ";
-        cin >> apellidos[i];
-        cout << "El nuevo apellido es: " << apellidos[i] << endl;
-        break;
+        switch (opcion)
+        {
+        case 1:
+            cout << "El nombre actual es: " << nombres[i] << endl;
+            cout << "Ingrese el nuevo nombre: ";
+            cin >> nombres[i];
+            cout << "El nuevo nombre es: " << nombres[i] << endl;
+            break;
 
-    case 3:
-        cout << "La cedula actual es: " << cedulas[i] << endl;
-        cout << "Ingrese la nueva cedula: ";
-        cin >> cedulas[i];
-        cout << "La nueva cedula es: " << cedulas[i] << endl;
-        break;
+        case 2:
+            cout << "El apellido actual es: " << apellidos[i] << endl;
+            cout << "Ingrese el nuevo apellido: ";
+            cin >> apellidos[i];
+            cout << "El nuevo apellido es: " << apellidos[i] << endl;
+            break;
 
-    case 4:
-        cout << "La contraseña actual es: " << claves[i] << endl;
-        char contrasena[sizePass];
-        generarContrasena(contrasena);
-        claves[i] = contrasena;
-        cout << "La nueva contraseña es: " << claves[i] << endl;
-        break;
+        case 3:
+            cout << "La cedula actual es: " << cedulas[i] << endl;
+            cout << "Ingrese la nueva cedula: ";
+            cin >> cedulas[i];
+            cout << "La nueva cedula es: " << cedulas[i] << endl;
+            break;
 
-    case 5:
-        break;
-    default:
-        cout << "Opcion no valida" << endl;
-        break;
+        case 4:
+            cout << "La contraseña actual es: " << claves[i] << endl;
+            char contrasena[sizePass];
+            generarContrasena(contrasena);
+            claves[i] = contrasena;
+            cout << "La nueva contraseña es: " << claves[i] << endl;
+            break;
+
+        case 5:
+            break;
+        default:
+            cout << "Opcion no valida" << endl;
+            break;
+        }
     }
 }
 
