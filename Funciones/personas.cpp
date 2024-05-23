@@ -9,28 +9,25 @@ using namespace std;
 using namespace chrono;
 
 // Buscar empleados
-void buscarEmpleado();
+int buscarEmpleado();
 
 // ACTUALIZAR BUSCAR EMPLEADO
 
-int i = 0;
 
-void buscarEmpleado()
+int buscarEmpleado()
 {
-    i = 0;
+    int i = 0;
     string cedula;
     cout << "Ingrese la cedula del empleado que desea buscar: ";
     cin >> cedula;
 
-    for (i < cedulas.size(); i++;)
+    for (i < empleados.size(); i++;)
     {
-        if (cedulas[i] == cedula)
+        if (empleados[i].cedula == cedula)
         {
-            break;
-        }
-        else
-        {
-            cout << "Empleado no encontrado" << endl;
+            return i;
         }
     }
+    cout << "Empleado no encontrado" << endl;
+    return -1;
 }
