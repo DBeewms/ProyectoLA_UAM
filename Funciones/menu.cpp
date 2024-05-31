@@ -8,6 +8,10 @@
 using namespace std;
 using namespace chrono;
 
+void menuAdmin();
+void menuEmpleado();
+void menuPrincipal();
+
 void menuAdmin()
 {
     int opcion;
@@ -94,4 +98,36 @@ void menuEmpleado()
             }
         } while (opcion != 3);
     }
+}
+
+void menuPrincipal()
+{
+    int opcion;
+    do
+    {
+        system("cls");
+        cout << "1. Administrador" << endl;
+        cout << "2. Empleado" << endl;
+        cout << "3. Salir" << endl;
+        cin >> opcion;
+
+        switch (opcion)
+        {
+        case 1:
+            menuAdmin();
+            break;
+        case 2:
+            menuEmpleado();
+            break;
+        case 3:
+            system("cls");
+            cout << "Saliendo..." << endl;
+            system("pause");
+            break;
+        default:
+            cout << "Opcion invalida..." << endl;
+            system("pause");
+            break;
+        }
+    } while (opcion != 3);
 }
