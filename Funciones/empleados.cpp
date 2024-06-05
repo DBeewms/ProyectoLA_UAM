@@ -92,21 +92,23 @@ void registrarAsistencia(time_t horaEntrada_t)
     // Lapso de tiempo de 5 min para la tolerancia
     double tolerancia = 5.0;
 
-    if (diferenciaMinutos <= tolerancia)
-    {
-        // Guardar la asistencia en el vector
-        // Asisgencia en tiempo
-        empleados[index].fechas.push_back(formatted_date);
-        empleados[index].horas.push_back(formatted_hora);
-        empleados[index].asistencias.push_back(1);
-        empleados[index].llegadaTarde.push_back(0);
-    }
-    else
-    {
-        // Llegada tarde
-        empleados[index].fechas.push_back(formatted_date);
-        empleados[index].horas.push_back(formatted_hora);
-        empleados[index].asistencias.push_back(1);
-        empleados[index].llegadaTarde.push_back(1);
+    if (empleados[index].numFechas < MAX_FECHAS && empleados[index].numHoras < MAX_HORAS && 
+        empleados[index].numAsistencias < MAX_ASISTENCIAS && empleados[index].numLlegadaTarde < MAX_LLEGADA_TARDE) {
+        
+        if (diferenciaMinutos <= tolerancia) {
+            // Asistencia en tiempo
+            empleados[index].fechas[empleados[index].numFechas++] = formatted_date;
+            empleados[index].horas[empleados[index].numHoras++] = formatted_hora;
+            empleados[index].asistencias[empleados[index].numAsistencias++] = 1;
+            empleados[index].llegadaTarde[empleados[index].numLlegadaTarde++] = 0;
+        } else {
+            // Llegada tarde
+            empleados[index].fechas[empleados[index].numFechas++] = formatted_date;
+            empleados[index].horas[empleados[index].numHoras++] = formatted_hora;
+            empleados[index].asistencias[empleados[index].numAsistencias++] = 1;
+            empleados[index].llegadaTarde[empleados[index].numLlegadaTarde++] = 1;
+        }
+    } else {
+        cout << "No se pueden registrar más asistencias para este empleado." << endl;
     }
 }

@@ -81,27 +81,47 @@ void generarContrasena(char *contrasena)
 
 void registrarEmpleado()
 {
-    string nombreEmpleado, apellidoEmpleado, cedulaEmpleado;
-    char contrasena[sizePass];
-    int j;
-    for (int i = 0; i < j; i++)
+    if (numEmpleadosRegistrados >= MAX_EMPLEADOS)
     {
-        cout << "Cuantos empleados desea registrar? ";
-        cin >> j;
+        cout << "No se pueden registrar más empleados. Capacidad máxima alcanzada." << endl;
+        return;
+    }
+
+    int numEmpleados;
+    cout << "Cuantos empleados desea registrar? ";
+    cin >> numEmpleados;
+
+    if (numEmpleadosRegistrados + numEmpleados > MAX_EMPLEADOS)
+    {
+        cout << "No hay suficiente espacio para registrar a todos los empleados. Se registrarán solo "
+             << MAX_EMPLEADOS - numEmpleadosRegistrados << " empleados." << endl;
+        numEmpleados = MAX_EMPLEADOS - numEmpleadosRegistrados;
+    }
+
+    for (int i = 0; i < numEmpleados; i++)
+    {
+        string nombreEmpleado, apellidoEmpleado, cedulaEmpleado;
+        char contrasena[SIZE_PASS];
+
         cout << "Ingrese el nombre del empleado: ";
         cin >> nombreEmpleado;
-        nuevoEmpleado.nombre = nombreEmpleado;
+        empleados[numEmpleadosRegistrados].nombre = nombreEmpleado;
+
         cout << "Ingrese el apellido del empleado: ";
         cin >> apellidoEmpleado;
-        nuevoEmpleado.apellido = apellidoEmpleado;
+        empleados[numEmpleadosRegistrados].apellido = apellidoEmpleado;
+
         cout << "Ingrese la cedula del empleado: ";
         cin >> cedulaEmpleado;
-        nuevoEmpleado.cedula = cedulaEmpleado;
+        empleados[numEmpleadosRegistrados].cedula = cedulaEmpleado;
+
         generarContrasena(contrasena);
-        nuevoEmpleado.clave = contrasena;
-        cout << "La contraseña del empleado es:" << contrasena << endl;
+        empleados[numEmpleadosRegistrados].clave = contrasena;
+
+        cout << "La contraseña del empleado es: " << contrasena << endl;
+
+        numEmpleadosRegistrados++;
     }
-    empleados.push_back(nuevoEmpleado);
 }
 
 void imprimirDatosEmpleado()
@@ -186,29 +206,37 @@ void editarEmpleado()
 void eliminarEmpleado()
 {
     int index = buscarEmpleado();
-    imprimirDatosEmpleado();
-    int opcion;
-    if (index > -1)
+    if (index == -1)
     {
-        cout << "¿Estas seguro de que deseas eliminar este empleado?" << endl;
-        cout << "1. Si";
-        cout << "2. No";
-        cout << "Elige tu opcion: ";
-        cin >> opcion;
+        cout << "Empleado no encontrado." << endl;
+        return;
+    }
 
-        switch (opcion)
+    imprimirDatosEmpleado();
+
+    int opcion;
+    cout << "¿Estas seguro de que deseas eliminar este empleado?" << endl;
+    cout << "1. Si" << endl;
+    cout << "2. No" << endl;
+    cout << "Elige tu opcion: ";
+    cin >> opcion;
+
+    switch (opcion)
+    {
+    case 1:
+        // Desplazar elementos hacia la izquierda para sobrescribir el empleado eliminado
+        for (int i = index; i < numEmpleadosRegistrados - 1; i++)
         {
-        case 1:
-            empleados.erase(empleados.begin() + index);
-            cout << "Empleado eliminado" << endl;
-            system("pause");
-            break;
-        case 2:
-            break;
-        default:
-            cout << "Opcion no valida" << endl;
-            system("pause");
-            break;
+            empleados[i] = empleados[i + 1];
         }
+        numEmpleadosRegistrados--;
+        cout << "Empleado eliminado" << endl;
+        break;
+    case 2:
+        // No hacer nada y salir
+        break;
+    default:
+        cout << "Opcion no valida" << endl;
+        break;
     }
 }

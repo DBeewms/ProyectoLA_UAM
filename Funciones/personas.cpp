@@ -16,15 +16,12 @@ int buscarEmpleado();
 
 int buscarEmpleado()
 {
-    int i = 0;
     string cedula;
     cout << "Ingrese la cedula del empleado que desea buscar: ";
     cin >> cedula;
 
-    for (i < empleados.size(); i++;)
-    {
-        if (empleados[i].cedula == cedula)
-        {
+    for (int i = 0; i < numEmpleadosRegistrados; i++) {
+        if (empleados[i].cedula == cedula) {
             return i;
         }
     }
