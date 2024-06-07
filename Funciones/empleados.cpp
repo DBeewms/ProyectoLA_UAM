@@ -9,6 +9,7 @@ using namespace std;
 
 int i = 0;
 void imprimirDatosEmpleadoEnEmpleados();
+int iniciarSesionEmpleado();
 void registrarAsistencia(time_t horaEntrada_t);
 
 void imprimirDatosEmpleadoEnEmpleados()
@@ -19,8 +20,9 @@ void imprimirDatosEmpleadoEnEmpleados()
     cout << "Cedula: " << empleados[index].cedula << endl;
 }
 
-void iniciarSesionEmpleado()
+int iniciarSesionEmpleado()
 {
+    int intentos = 3;
     int index = buscarEmpleado();
     char contrasena[sizePass];
 
@@ -29,14 +31,23 @@ void iniciarSesionEmpleado()
         cout << "Ingrese la contraseña: ";
         cin >> contrasena;
 
-        if (empleados[index].clave == contrasena)
+        for (int i = 0; i < intentos; i++)
         {
-            cout << "Sesion iniciada" << endl;
+            if (empleados[index].clave == contrasena)
+            {
+                cout << "Sesion iniciada" << endl;
+                return 0;
+            }
+            else
+            {
+                cout << "Contraseña incorrecta" << endl;
+            }
         }
-        else
-        {
-            cout << "Contraseña incorrecta" << endl;
-        }
+    }
+    else
+    {   
+        cout << "Reintentar..." << endl;
+        return 1;
     }
 }
 
@@ -98,5 +109,4 @@ void registrarAsistencia(time_t horaEntrada_t)
         empleados[index].asistencias.push_back(1);
         empleados[index].llegadaTarde.push_back(1);
     }
-    
 }

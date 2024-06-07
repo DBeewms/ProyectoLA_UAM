@@ -2,8 +2,8 @@
 
 using namespace std;
 
-int main(int argc, char const *argv[])
+int main()
 {
-    //A desarrollar
+    menuPrincipal();
     return 0;
 }

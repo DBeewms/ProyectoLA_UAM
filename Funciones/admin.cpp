@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <ctime>
+#include <chrono>
 #define sizePass 5
 
 using namespace std;
@@ -101,8 +103,6 @@ void registrarEmpleado()
     }
     empleados.push_back(nuevoEmpleado);
 }
-
-// ACTUALIZAR SIGUIENDO LA ESTRUCTURA DE LA SIGUIENTE FUNCION
 
 void imprimirDatosEmpleado()
 {
