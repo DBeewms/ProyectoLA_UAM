@@ -66,9 +66,6 @@ void eliminarEmpleado();
 void imprimirDatosEmpleado(int index);
 void mostrarTodosLosEmpleados();
 
-// Funciones para guardar en archivos los datos
-void guardarEmpleados();
-
 // Definicion de funciones
 
 // Generar clave aleatoria
@@ -87,7 +84,7 @@ void generarContrasena(char *contrasena)
 void registrarEmpleado()
 {
     system("cls || clear");
-     
+
     // Pedimos los datos del empleado
     fflush(stdin);
     cout << "Ingrese el nombre del empleado: ";
@@ -112,32 +109,20 @@ void registrarEmpleado()
             return;
         }
     }
-    
 
     cout << "Se generara la clave automaticamente" << endl;
 
     // Generamos la clave aleatoriamente
     generarContrasena(empleados[numEmpleados].infoUsuario.clave);
     cout << "La contraseña del empleado es: " << empleados[numEmpleados].infoUsuario.clave << endl;
-    
-    //Agregamos al empleado en nuestro archivo
-    ofstream archivo("empleados.txt", ios::app);
-    if (archivo.is_open())
-    {
-        archivo << empleados[numEmpleados].nombre << endl;
-        archivo << empleados[numEmpleados].apellido << endl;
-        archivo << empleados[numEmpleados].infoUsuario.id << endl;
-        archivo << empleados[numEmpleados].infoUsuario.clave << endl;
-        archivo.close();
-    }
-    else
-    {
-        cout << "No se pudo abrir el archivo" << endl;
-    }
+
+    numEmpleados++;
+
+    // Guardar empleados en el archivo
+    guardarEmpleadosEnArchivo("empleados.txt");
 
     cout << "Empleado registrado exitosamente" << endl;
 
-    numEmpleados++;
     system("pause");
 }
 
@@ -171,8 +156,8 @@ void editarEmpleado()
         }
 
         cout << "Que deseas editar?" << endl;
-        cout << "1. Nombre "<< endl;
-        cout << "2. Apellido"<< endl;
+        cout << "1. Nombre " << endl;
+        cout << "2. Apellido" << endl;
         cout << "3. id" << endl;
         cout << "4. clave" << endl;
         cout << "5. Salir" << endl;
@@ -188,6 +173,7 @@ void editarEmpleado()
             fflush(stdin);
             cin.getline(empleados[index].nombre, MAX_STR, '\n');
             cout << "El nuevo nombre es: " << empleados[index].nombre << endl;
+
             system("pause");
             break;
 
@@ -229,7 +215,9 @@ void editarEmpleado()
             cout << "Opcion no valida" << endl;
             break;
         }
-        
+
+        // Guardar los cambios en el archivo
+        guardarEmpleadosEnArchivo("empleados.txt");
     }
 }
 
@@ -263,6 +251,8 @@ void eliminarEmpleado()
                 }
                 // Disminuimos el contador de empleados
                 numEmpleados--;
+                // Guardar los cambios en el archivo
+                guardarEmpleadosEnArchivo("empleados.txt");
                 cout << "Empleado eliminado exitosamente" << endl;
                 system("pause");
                 break;
@@ -302,23 +292,3 @@ void mostrarTodosLosEmpleados()
     system("pause");
 }
 
-void guardarEmpleados()
-{
-    ofstream archivo("empleados.txt");
-    if (archivo.is_open())
-    {
-        archivo << numEmpleados << endl;
-        for (int i = 0; i < numEmpleados; i++)
-        {
-            archivo << empleados[i].nombre << endl;
-            archivo << empleados[i].apellido << endl;
-            archivo << empleados[i].infoUsuario.id << endl;
-            archivo << empleados[i].infoUsuario.clave << endl;
-        }
-        archivo.close();
-    }
-    else
-    {
-        cout << "No se pudo abrir el archivo" << endl;
-    }
-}

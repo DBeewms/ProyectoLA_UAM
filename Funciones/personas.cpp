@@ -3,7 +3,7 @@
 #include <string>
 #include <chrono>
 #include <ctime>
-#include "personas.h"
+#include "funFicheros.cpp"
 
 using namespace std;
 using namespace chrono;

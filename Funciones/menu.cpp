@@ -12,6 +12,7 @@ void menuEmpleado();
 // Definicion de funciones
 void menuInicioSesion()
 {
+    cargarEmpleadosDesdeArchivo("empleados.txt");
     // Variables Locales
     int opcion;
 
@@ -139,6 +140,50 @@ void menuAdministrador()
 
     } while (opcion != 3);
 }
+// void loginEmpleado()
+// {
+
+//     int opcion;
+//     do
+//     {
+//         system("cls || clear");
+//         cout << "\t\t\t _________________________________________________________________\t\t\t" << endl;
+//         cout << "\t\t\t                   Inicio de Sesion como Empleado                 \t\t\t" << endl;
+//         cout << "\t\t\t                            --- MENU ---                           \t\t\t" << endl;
+//         cout << "\t\t\t__________________________________________________________________\t\t\t" << endl;
+//         cout << "\t ____________________________                                      \t\t\t" << endl;
+//         cout << "\t|                            |                                     \t\t\t" << endl;
+//         cout << "\t|    Selecciona una opcion:  |                                     \t\t\t" << endl;
+//         cout << "\t|                            |                                     \t\t\t" << endl;
+//         cout << "\t| 1. Iniciar Sesion          |                                     \t\t\t" << endl;
+//         cout << "\t|                            |                                     \t\t\t" << endl;
+//         cout << "\t| 2. Salir                   |                                     \t\t\t" << endl;
+//         cout << "\t|____________________________|                                     \t\t\t\n\n"
+//              << endl;
+//         cout << "\t-------------------------------------------------------------------- \t\t\t" << endl
+//              << endl;
+//         cout << "\tPor favor elige una opcion: ";
+//         cin >> opcion;
+//         cout << "\n\n"
+//              << endl;
+
+//         switch (opcion)
+//         {
+//         case 1:
+//             iniciarSesionEmpleado();
+//             break;
+//         case 2:
+//             system("cls || clear");
+//             cout << "Saliendo..." << endl;
+//             system("pause");
+//             break;
+//         default:
+//             cout << "Opcion no valida" << endl;
+//             system("pause");
+//             break;
+//         }
+//     } while (opcion != 2);
+// }
 
 void menuEmpleado()
 {
