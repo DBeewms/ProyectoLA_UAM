@@ -1,30 +1,108 @@
-#include "empleados.cpp"
 #include <iostream>
-#include <vector>
 #include <string>
-#include <chrono>
-#include <ctime>
+#include <fstream>
+#include "admin.cpp"
 
 using namespace std;
-using namespace chrono;
+// Prototipos de funciones
+void menuInicioSesion();
+void menuAdministrador();
 
-void menuAdmin();
-void menuEmpleado();
-void menuPrincipal();
-
-void menuAdmin()
+// Definicion de funciones
+void menuInicioSesion()
 {
+    // Variables Locales
     int opcion;
+
     do
     {
-        system("cls");
-        cout << "1. Registrar empleado" << endl;
-        cout << "2. Editar empleado" << endl;
-        cout << "3. Buscar empleado" << endl;
-        cout << "4. Eliminar empleado" << endl;
-        cout << "5. Generar informes" << endl;
-        cout << "6. Salir" << endl;
+        system("cls || clear");
+        // Menu de inicio de sesion
+        cout << "\t\t\t _________________________________________________________________\t\t\t" << endl;
+        cout << "\t\t\t|                                                                 |\t\t\t" << endl;
+        cout << "\t\t\t|    ______ _                           _     _                   |\t\t\t" << endl;
+        cout << "\t\t\t|    | ___ (_)                         (_)   | |                  |\t\t\t" << endl;
+        cout << "\t\t\t|    | |_/ /_  ___ _ ____   _____ _ __  _  __| | _ __             |\t\t\t" << endl;
+        cout << "\t\t\t|    | ___ \\ |/ _ \\ '_ \\ \\ / / _ \\ '_ \\| |/ _` |/ _ \\             |\t\t\t" << endl;
+        cout << "\t\t\t|    | |_/ / |  __/ | | \\ V /  __/ | | | | (_| | (_) |            |\t\t\t" << endl;
+        cout << "\t\t\t|    \\____/|_|\\___|_| |_|\\_/ \\___|_| |_|_|\\__,_|\\___/             |\t\t\t" << endl;
+        cout << "\t\t\t|                                                                 |\t\t\t" << endl;
+        cout << "\t\t\t|_________________________________________________________________|\t\t\t\n\n"
+             << endl;
+        cout << "\t\t\t            Bienvenido a la pagina de inicio de Sesion                \t\t\t" << endl;
+        cout << "\t\t\t                            --- MENU ---                           \t\t\t\n\n"
+             << endl;
+        cout << "\t ____________________________                                      \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t|    Iniciar Sesion como:    |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 1. Administrador           |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 2. Empleado                |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t|____________________________|                                     \t\t\t\n\n"
+             << endl;
+        cout << "\t-------------------------------------------------------------------- \t\t\t" << endl
+             << endl;
+        cout << "\tPor favor elige una opcion: ";
         cin >> opcion;
+        cout << "\n\n"
+             << endl;
+
+        switch (opcion)
+        {
+        case 1:
+            menuAdministrador();
+            break;
+
+        case 2:
+            cout << "hola empleado";
+            break;
+
+        case 3:
+            cout << "Saliendo..." << endl;
+            break;
+        }
+
+    } while (opcion != 3);
+}
+
+void menuAdministrador()
+{
+    // Variables Locales
+    int opcion;
+
+    do
+    {
+        system("cls || clear");
+        // Menu de administrador
+        cout << "\t\t\t _________________________________________________________________\t\t\t" << endl;
+        cout << "\t\t\t            Bienvenido a la pagina de Administrador                \t\t\t" << endl;
+        cout << "\t\t\t                            --- MENU ---                           \t\t\t" << endl;
+        cout << "\t\t\t__________________________________________________________________\t\t\t" << endl;
+        cout << "\t ____________________________                                      \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t|    Selecciona una opcion:  |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 1. Registrar Empleado      |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 2. Editar Empleado         |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 3. Eliminar Empleado       |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 4. Buscar Empleado         |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 5. Lista de Empleados      |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 6. Salir                   |                                     \t\t\t" << endl;
+        cout << "\t|____________________________|                                     \t\t\t\n\n"
+             << endl;
+        cout << "\t-------------------------------------------------------------------- \t\t\t" << endl
+             << endl;
+        cout << "\tPor favor elige una opcion: ";
+        cin >> opcion;
+        cout << "\n\n"
+             << endl;
 
         switch (opcion)
         {
@@ -35,99 +113,28 @@ void menuAdmin()
             editarEmpleado();
             break;
         case 3:
-            imprimirDatosEmpleado();
-            break;
-        case 4:
             eliminarEmpleado();
             break;
-        case 5:
-            // Generar informe
-            break;
-        case 6:
-            system("cls");
-            cout << "Saliendo" << endl;
-            system("pause");
-            break;
-        default:
-            cout << "Opcion invalida..." << endl;
+        case 4:
+        {
+            system("cls || clear");
+            int index = buscarEmpleado();
+            imprimirDatosEmpleado(index);
             system("pause");
             break;
         }
-    } while (opcion != 6);
-}
-
-void menuEmpleado()
-{
-    int opcion;
-    time_t horaEntrada_t, horaSalida_t;
-    pair<time_t, time_t> horasEntradaSalida;
-
-    if (iniciarSesionEmpleado() != 1)
-    {
-        do
-        {
-            cout << "1. Registrar asistencia" << endl;
-            cout << "2. Imprimir informe" << endl;
-            cout << "3. Salir" << endl;
-            cin >> opcion;
-
-            switch (opcion)
-            {
-            case 1:
-                // Usa la funcion de admin para registrar entrada/salida
-                horasEntradaSalida = ingresarEntradaSalida();
-                horaEntrada_t = horasEntradaSalida.first;
-                horaSalida_t = horasEntradaSalida.second;
-                registrarAsistencia(horaEntrada_t);
-                break;
-            case 2:
-                // Imprimir informe
-                system("cls");
-                cout << "Imprimiendo informe..." << endl;
-                system("pause");
-                break;
-            case 3:
-                system("cls");
-                cout << "Saliendo..." << endl;
-                system("pause");
-                break;
-            default:
-                cout << "Opcion invalida..." << endl;
-                system("pause");
-                break;
-            }
-        } while (opcion != 3);
-    }
-}
-
-void menuPrincipal()
-{
-    int opcion;
-    do
-    {
-        system("cls");
-        cout << "1. Administrador" << endl;
-        cout << "2. Empleado" << endl;
-        cout << "3. Salir" << endl;
-        cin >> opcion;
-
-        switch (opcion)
-        {
-        case 1:
-            menuAdmin();
+        case 5:
+            mostrarTodosLosEmpleados();
             break;
-        case 2:
-            menuEmpleado();
-            break;
-        case 3:
-            system("cls");
+        case 6:
+            system("cls || clear");
             cout << "Saliendo..." << endl;
             system("pause");
             break;
         default:
-            cout << "Opcion invalida..." << endl;
-            system("pause");
+            cout << "Opcion no valida" << endl;
             break;
         }
+
     } while (opcion != 3);
 }

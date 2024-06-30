@@ -4,6 +4,6 @@ using namespace std;
 
 int main()
 {
-    menuPrincipal();
+    menuInicioSesion();
     return 0;
 }

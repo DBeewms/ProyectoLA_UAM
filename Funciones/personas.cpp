@@ -11,23 +11,22 @@ using namespace chrono;
 // Buscar empleados
 int buscarEmpleado();
 
-// ACTUALIZAR BUSCAR EMPLEADO
-
-
 int buscarEmpleado()
 {
-    int i = 0;
-    string cedula;
-    cout << "Ingrese la cedula del empleado que desea buscar: ";
-    cin >> cedula;
+    int idTemporal;
+    cout << "Ingrese la id del empleado: ";
+    cin >> idTemporal;
 
-    for (i < empleados.size(); i++;)
+    for (int i = 0; i < numEmpleados; i++)
     {
-        if (empleados[i].cedula == cedula)
+        if (empleados[i].infoUsuario.id == idTemporal)
         {
             return i;
         }
+        
     }
-    cout << "Empleado no encontrado" << endl;
+    cout << "No se encontro el empleado" << endl;
+    system("pause");
     return -1;
 }
+

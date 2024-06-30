@@ -1,214 +1,324 @@
-#include "informes.cpp"
 #include <iostream>
-#include <string>
-#include <vector>
+#include <string.h>
+#include <fstream>
 #include <ctime>
 #include <chrono>
-#define sizePass 5
+#include "informes.cpp"
 
 using namespace std;
 
-// Usar estas variables al implementar las funciones:
+// // Usar estas variables al implementar las funciones:
 
-// time_t horaEntrada_t, horaSalida_t;
-// pair<time_t, time_t> horasEntradaSalida;
+// // time_t horaEntrada_t, horaSalida_t;
+// // pair<time_t, time_t> horasEntradaSalida;
 
-// void pedirFecha();
+// // void pedirFecha();
+// // pair<time_t, time_t> ingresarEntradaSalida();
+// // void registrarAsistencia(time_t horaEntrada_t);
+// // time_t calcularHorasExtra(time_t horaSalida_t);
+
+// // horasEntradaSalida = ingresarEntradaSalida();
+// // horaEntrada_t = horasEntradaSalida.first;
+// // horaSalida_t = horasEntradaSalida.second;
+
 // pair<time_t, time_t> ingresarEntradaSalida();
-// void registrarAsistencia(time_t horaEntrada_t);
-// time_t calcularHorasExtra(time_t horaSalida_t);
 
-// horasEntradaSalida = ingresarEntradaSalida();
-// horaEntrada_t = horasEntradaSalida.first;
-// horaSalida_t = horasEntradaSalida.second;
+// pair<time_t, time_t> ingresarEntradaSalida()
+// {
+//     // Tomar el punto actual del calendario del sistema
+//     auto now = system_clock::now();
 
-// ACTUALIZAR FUNCIONES SIGUIENDO LA ESTRUCTURA PERSONA
+//     // Convertir a time_t que representa el tiempo del calendario
+//     time_t now_time_t = system_clock::to_time_t(now);
 
-// Registrar empleados
-void registrarEmpleado();
-// Editar empleados
-void editarEmpleado();
-// Eliminar empleados
-void eliminarEmpleado();
+//     // Convierte a un estrucutra tm que representa la fecha y tiempo de un calendario
+//     tm *now_tm = localtime(&now_time_t);
 
-void imprimirDatosEmpleado();
+//     // Pedir hora de entrada y de salida
+//     string horaEntrada_str, horaSalida_str;
+//     cout << "Define la hora de entrada y salida..." << endl;
+//     cout << "Hora de entrada (HH:MM:SS): ";
+//     cin >> horaEntrada_str;
+//     cout << "Hora de salida (HH:MM:SS): ";
+//     cin >> horaSalida_str;
+
+//     // Parsear la hora de entrada y salida a tm
+//     tm horaEntrada_tm = *now_tm, horaSalida_tm = *now_tm;
+//     stringstream horaEntrada_ss(horaEntrada_str), horaSalida_ss(horaSalida_str);
+//     horaEntrada_ss >> get_time(&horaEntrada_tm, "%H:%M:%S");
+//     horaSalida_ss >> get_time(&horaSalida_tm, "%H:%M:%S");
+
+//     // Parsear las estructuras tm devuelta a time_t
+//     time_t horaEntrada_t = mktime(&horaEntrada_tm);
+//     time_t horaSalida_t = mktime(&horaSalida_tm);
+
+//     return make_pair(horaEntrada_t, horaSalida_t);
+// }
+
+// Generar clave aleatoria
 void generarContrasena(char *contrasena);
 
-pair<time_t, time_t> ingresarEntradaSalida();
+// Funciones de administrador para empleados
+void registrarEmpleado();
+void editarEmpleado();
+void eliminarEmpleado();
 
-pair<time_t, time_t> ingresarEntradaSalida()
-{
-    // Tomar el punto actual del calendario del sistema
-    auto now = system_clock::now();
+void imprimirDatosEmpleado(int index);
+void mostrarTodosLosEmpleados();
 
-    // Convertir a time_t que representa el tiempo del calendario
-    time_t now_time_t = system_clock::to_time_t(now);
+// Funciones para guardar en archivos los datos
+void guardarEmpleados();
 
-    // Convierte a un estrucutra tm que representa la fecha y tiempo de un calendario
-    tm *now_tm = localtime(&now_time_t);
+// Definicion de funciones
 
-    // Pedir hora de entrada y de salida
-    string horaEntrada_str, horaSalida_str;
-    cout << "Define la hora de entrada y salida..." << endl;
-    cout << "Hora de entrada (HH:MM:SS): ";
-    cin >> horaEntrada_str;
-    cout << "Hora de salida (HH:MM:SS): ";
-    cin >> horaSalida_str;
-
-    // Parsear la hora de entrada y salida a tm
-    tm horaEntrada_tm = *now_tm, horaSalida_tm = *now_tm;
-    stringstream horaEntrada_ss(horaEntrada_str), horaSalida_ss(horaSalida_str);
-    horaEntrada_ss >> get_time(&horaEntrada_tm, "%H:%M:%S");
-    horaSalida_ss >> get_time(&horaSalida_tm, "%H:%M:%S");
-
-    // Parsear las estructuras tm devuelta a time_t
-    time_t horaEntrada_t = mktime(&horaEntrada_tm);
-    time_t horaSalida_t = mktime(&horaSalida_tm);
-
-    return make_pair(horaEntrada_t, horaSalida_t);
-}
-
+// Generar clave aleatoria
 void generarContrasena(char *contrasena)
 {
     srand(time(0));
-    for (int i = 0; i < sizePass; i++)
+    for (int i = 0; i < SIZE_PASS; i++)
     {
         int num = rand() % 10;
         contrasena[i] = '0' + num;
     }
-    contrasena[sizePass] = '\0';
+    contrasena[SIZE_PASS] = '\0';
 }
 
+// Para registrar a un nuevo empleado
 void registrarEmpleado()
 {
-    string nombreEmpleado, apellidoEmpleado, cedulaEmpleado;
-    char contrasena[sizePass];
-    int j;
-    for (int i = 0; i < j; i++)
+    system("cls || clear");
+     
+    // Pedimos los datos del empleado
+    fflush(stdin);
+    cout << "Ingrese el nombre del empleado: ";
+    cin.getline(empleados[numEmpleados].nombre, MAX_STR, '\n');
+    cout << "Ingrese el apellido del empleado: ";
+    cin.getline(empleados[numEmpleados].apellido, MAX_STR, '\n');
+    cout << "Ingrese el id de usuario: ";
+    fflush(stdin);
+    cin >> empleados[numEmpleados].infoUsuario.id;
+    if (empleados[numEmpleados].infoUsuario.id < 0)
     {
-        cout << "Cuantos empleados desea registrar? ";
-        cin >> j;
-        cout << "Ingrese el nombre del empleado: ";
-        cin >> nombreEmpleado;
-        nuevoEmpleado.nombre = nombreEmpleado;
-        cout << "Ingrese el apellido del empleado: ";
-        cin >> apellidoEmpleado;
-        nuevoEmpleado.apellido = apellidoEmpleado;
-        cout << "Ingrese la cedula del empleado: ";
-        cin >> cedulaEmpleado;
-        nuevoEmpleado.cedula = cedulaEmpleado;
-        generarContrasena(contrasena);
-        nuevoEmpleado.clave = contrasena;
-        cout << "La contraseña del empleado es:" << contrasena << endl;
+        cout << "El id no puede ser negativo" << endl;
+        system("pause");
+        return;
     }
-    empleados.push_back(nuevoEmpleado);
+    for (int i = 0; i < numEmpleados; i++)
+    {
+        if (empleados[i].infoUsuario.id == empleados[numEmpleados].infoUsuario.id)
+        {
+            cout << "El id ya existe" << endl;
+            system("pause");
+            return;
+        }
+    }
+    
+
+    cout << "Se generara la clave automaticamente" << endl;
+
+    // Generamos la clave aleatoriamente
+    generarContrasena(empleados[numEmpleados].infoUsuario.clave);
+    cout << "La contraseña del empleado es: " << empleados[numEmpleados].infoUsuario.clave << endl;
+    
+    //Agregamos al empleado en nuestro archivo
+    ofstream archivo("empleados.txt", ios::app);
+    if (archivo.is_open())
+    {
+        archivo << empleados[numEmpleados].nombre << endl;
+        archivo << empleados[numEmpleados].apellido << endl;
+        archivo << empleados[numEmpleados].infoUsuario.id << endl;
+        archivo << empleados[numEmpleados].infoUsuario.clave << endl;
+        archivo.close();
+    }
+    else
+    {
+        cout << "No se pudo abrir el archivo" << endl;
+    }
+
+    cout << "Empleado registrado exitosamente" << endl;
+
+    numEmpleados++;
+    system("pause");
 }
 
-void imprimirDatosEmpleado()
+// Para imprimir los datos de un empleado
+void imprimirDatosEmpleado(int index)
 {
-    int index = buscarEmpleado();
-    cout << "Nombre: " << empleados[index].nombre << endl;
-    cout << "Apellido: " << empleados[index].apellido << endl;
-    cout << "Cedula: " << empleados[index].cedula << endl;
-    cout << "Contraseña: " << empleados[index].clave << endl;
+    if (index != -1)
+    {
+        // Imprimimos los datos del empleado
+        cout << "Nombre: " << empleados[index].nombre << endl;
+        cout << "Apellido: " << empleados[index].apellido << endl;
+        cout << "Id de usuario: " << empleados[index].infoUsuario.id << endl;
+        cout << "PIN: " << empleados[index].infoUsuario.clave << endl;
+    }
 }
 
-// void imprimirAsistencia() {
-//     for (size_t i = 0; i < empleados.size(); ++i) {
-
-//         cout << "Empleado " << i + 1 << ":" << endl;
-
-//         for (size_t j = 0; j < empleados[i].fechas.size(); ++j) {
-//             cout << "Fecha: " << empleados[i].fechas[j] << endl;
-//             cout << "Asistencia: " << empleados[i].asistencias[j] << endl;
-//             cout << "Llegada Tarde: " << empleados[i].llegadaTarde[j] << endl;
-//         }
-//         cout << endl;
-//     }
-// }
-
+// Para editar a un empleado
 void editarEmpleado()
 {
+    system("cls || clear");
     int index = buscarEmpleado();
-    imprimirDatosEmpleado();
+    imprimirDatosEmpleado(index);
     int opcion;
-    if (index > -1)
+    if (index != -1)
     {
-        cout << "¿Que deseas editar?" << endl;
-        cout << "1. Nombre ";
-        cout << "2. Apellido";
-        cout << "3. Cedula";
-        cout << "4. Contraseña";
-        cout << "5. Salir";
-        cout << "Elige tu opcion: ";
+        if (numEmpleados == 0)
+        {
+            cout << "No hay empleados registrados" << endl;
+            system("pause");
+            return;
+        }
+
+        cout << "Que deseas editar?" << endl;
+        cout << "1. Nombre "<< endl;
+        cout << "2. Apellido"<< endl;
+        cout << "3. id" << endl;
+        cout << "4. clave" << endl;
+        cout << "5. Salir" << endl;
+        cout << "Elige tu opcion: " << endl;
         cin >> opcion;
 
+        // Reemplazamos los campos con los nuevos datos
         switch (opcion)
         {
         case 1:
             cout << "El nombre actual es: " << empleados[index].nombre << endl;
             cout << "Ingrese el nuevo nombre: ";
-            cin >> empleados[index].nombre;
+            fflush(stdin);
+            cin.getline(empleados[index].nombre, MAX_STR, '\n');
             cout << "El nuevo nombre es: " << empleados[index].nombre << endl;
+            system("pause");
             break;
 
         case 2:
             cout << "El apellido actual es: " << empleados[index].apellido << endl;
             cout << "Ingrese el nuevo apellido: ";
-            cin >> empleados[index].apellido;
+            fflush(stdin);
+            cin.getline(empleados[index].apellido, MAX_STR, '\n');
             cout << "El nuevo apellido es: " << empleados[index].apellido << endl;
+            system("pause");
             break;
 
         case 3:
-            cout << "La cedula actual es: " << empleados[index].cedula << endl;
-            cout << "Ingrese la nueva cedula: ";
-            cin >> empleados[index].cedula;
-            cout << "La nueva cedula es: " << empleados[index].cedula << endl;
+            cout << "La id actual es: " << empleados[index].infoUsuario.id << endl;
+            cout << "Ingrese la nueva id: ";
+            fflush(stdin);
+            cin >> empleados[index].infoUsuario.id;
+            cout << "La nueva id es: " << empleados[index].infoUsuario.id << endl;
+            system("pause");
             break;
 
         case 4:
-            cout << "La contraseña actual es: " << empleados[index].clave << endl;
-            char contrasena[sizePass];
+            cout << "La clave actual es: " << empleados[index].infoUsuario.clave << endl;
+            cout << "Se generara una nueva clave" << endl;
+            // Creamos un nuevo arreglo para almacenar la nueva clave
+            char contrasena[SIZE_PASS];
+            // Generamos la nueva clave
             generarContrasena(contrasena);
-            empleados[index].clave = contrasena;
-            cout << "La nueva contraseña es: " << empleados[index].clave << endl;
+            strcpy(empleados[index].infoUsuario.clave, contrasena);
+            cout << "La nueva clave es: " << empleados[index].infoUsuario.clave << endl;
+            system("pause");
             break;
 
         case 5:
+            cout << "Saliendo..." << endl;
+            system("pause");
             break;
         default:
             cout << "Opcion no valida" << endl;
             break;
+        }
+        
+    }
+}
+
+// Para eliminar a un empleado
+void eliminarEmpleado()
+{
+    int opcion;
+    system("cls || clear");
+    int index = buscarEmpleado();
+    imprimirDatosEmpleado(index);
+
+    if (index != -1)
+    {
+        if (numEmpleados > 1)
+        {
+            cout << "¿Estas seguro de que deseas eliminar este empleado?" << endl;
+            cout << "1. Si" << endl;
+            cout << "2. No" << endl;
+            cout << "Elige tu opcion: ";
+            cin >> opcion;
+            switch (opcion)
+            {
+            case 1:
+                system("cls || clear");
+                // Eliminamos el empleado del arreglo
+
+                for (int i = index; i < numEmpleados - 1; i++)
+                {
+                    // El empleado a eliminar se sobreescribe con el siguiente empleado
+                    empleados[i] = empleados[i + 1];
+                }
+                // Disminuimos el contador de empleados
+                numEmpleados--;
+                cout << "Empleado eliminado exitosamente" << endl;
+                system("pause");
+                break;
+
+            case 2:
+                cout << "Saliendo..." << endl;
+                system("pause");
+                break;
+            default:
+                cout << "Opcion no valida" << endl;
+                system("pause");
+                break;
+            }
+        }
+        else
+        {
+            cout << "No puedes eliminar el unico empleado" << endl;
+            system("pause");
         }
     }
 }
 
-void eliminarEmpleado()
+// Para mostrar a todos los empleados
+void mostrarTodosLosEmpleados()
 {
-    int index = buscarEmpleado();
-    imprimirDatosEmpleado();
-    int opcion;
-    if (index > -1)
+    system("cls || clear");
+    cout << "Lista de empleados" << endl;
+    for (int i = 0; i < numEmpleados; i++)
     {
-        cout << "¿Estas seguro de que deseas eliminar este empleado?" << endl;
-        cout << "1. Si";
-        cout << "2. No";
-        cout << "Elige tu opcion: ";
-        cin >> opcion;
+        cout << "Empleado " << i + 1 << endl;
+        cout << "Nombre: " << empleados[i].nombre << endl;
+        cout << "Apellido: " << empleados[i].apellido << endl;
+        cout << "id: " << empleados[i].infoUsuario.id << endl;
+        cout << "Clave: " << empleados[i].infoUsuario.clave << endl;
+        cout << endl;
+    }
+    system("pause");
+}
 
-        switch (opcion)
+void guardarEmpleados()
+{
+    ofstream archivo("empleados.txt");
+    if (archivo.is_open())
+    {
+        archivo << numEmpleados << endl;
+        for (int i = 0; i < numEmpleados; i++)
         {
-        case 1:
-            empleados.erase(empleados.begin() + index);
-            cout << "Empleado eliminado" << endl;
-            system("pause");
-            break;
-        case 2:
-            break;
-        default:
-            cout << "Opcion no valida" << endl;
-            system("pause");
-            break;
+            archivo << empleados[i].nombre << endl;
+            archivo << empleados[i].apellido << endl;
+            archivo << empleados[i].infoUsuario.id << endl;
+            archivo << empleados[i].infoUsuario.clave << endl;
         }
+        archivo.close();
+    }
+    else
+    {
+        cout << "No se pudo abrir el archivo" << endl;
     }
 }
