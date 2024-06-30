@@ -1,12 +1,13 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "admin.cpp"
+#include "empleados.cpp"
 
 using namespace std;
 // Prototipos de funciones
 void menuInicioSesion();
 void menuAdministrador();
+void menuEmpleado();
 
 // Definicion de funciones
 void menuInicioSesion()
@@ -56,12 +57,12 @@ void menuInicioSesion()
             break;
 
         case 2:
-            cout << "hola empleado";
+            menuEmpleado();
             break;
 
         case 3:
             cout << "Saliendo..." << endl;
-            break;
+            return;
         }
 
     } while (opcion != 3);
@@ -127,6 +128,69 @@ void menuAdministrador()
             mostrarTodosLosEmpleados();
             break;
         case 6:
+            system("cls || clear");
+            cout << "Saliendo..." << endl;
+            system("pause");
+            return;
+        default:
+            cout << "Opcion no valida" << endl;
+            break;
+        }
+
+    } while (opcion != 3);
+}
+
+void menuEmpleado()
+{
+    // Variables Locales
+    int opcion;
+
+    do
+    {
+        system("cls || clear");
+        // Menu de empleado
+        cout << "\t\t\t _________________________________________________________________\t\t\t" << endl;
+        cout << "\t\t\t            Bienvenido a la pagina de Empleado                    \t\t\t" << endl;
+        cout << "\t\t\t                            --- MENU ---                           \t\t\t" << endl;
+        cout << "\t\t\t__________________________________________________________________\t\t\t" << endl;
+        cout << "\t ____________________________                                      \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t|    Selecciona una opcion:  |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 1. Registrar mi Asistencia |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 2. Mostrar mi informe      |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 3. Mostrar mis datos       |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 4. Salir                   |                                     \t\t\t" << endl;
+        cout << "\t|____________________________|                                     \t\t\t\n\n"
+             << endl;
+        cout << "\t-------------------------------------------------------------------- \t\t\t" << endl
+             << endl;
+        cout << "\tPor favor elige una opcion: ";
+        cin >> opcion;
+        cout << "\n\n"
+             << endl;
+
+        switch (opcion)
+        {
+        case 1:
+            cout << "Registrar mi asistencia" << endl;
+            //Registrar la asistencia
+            break;
+        case 2:
+            cout << "Mostrar mi informe" << endl;
+            //Mostrar el informe
+            break;
+        case 3:
+        {
+            int index = buscarEmpleado();
+            imprimirDatosEmpleado(index);
+            system("pause");
+            break;
+        }
+        case 4:
             system("cls || clear");
             cout << "Saliendo..." << endl;
             system("pause");

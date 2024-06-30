@@ -8,7 +8,7 @@
 
 //Constantes de Inicio de Sesion
 #define MAX_ID 10
-#define SIZE_PASS 10
+#define SIZE_PASS 4
 
 //Constante de Fechas
 #define MAX_LONG_FECHA 10
@@ -26,7 +26,7 @@ int numEmpleados = 0;
 struct INICIO_SESION
 {
     int id;
-    char clave[SIZE_PASS];
+    char clave[SIZE_PASS+1];
 };
 
 struct FECHAS
