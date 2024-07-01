@@ -10,7 +10,7 @@ using namespace std;
 
 
 //login para empleado
-int iniciarSesionEmpleado();
+
 
 //Funciones para el empleado
 
@@ -29,52 +29,6 @@ void imprimirDatosEmpleadoEnEmpleados(int index)
     system("pause");
 }
 
-// int iniciarSesionEmpleado()
-// {
-//     int count = 0;
-
-//     INICIO_SESION usuario;
-//     cout << "\t\t\tPor favor ingrese el usuario y la contrasenia:\n"
-//          << endl;
-//     cout << "\t\t\t _________________________________\n";
-//     cout << "\t\t\t   -\\\\- Inicio de Sesion -\\\\-   \n\n";
-//     cout << "\t\t\t\t\t USUARIO:";
-//     cin >> usuario.id;
-//     cout << "\t\t\t\t\t CONTRASENIA:";
-//     cin.getline(usuario.clave, SIZE_PASS + 1);
-//     cout << "\n\n";
-//     cout << "\t\t\t _________________________________\n"
-//          << endl;
-
-//     // Usuarios[index] = usuario;
-//     // index++;
-
-//     ifstream input("empleados.txt");
-//     count = 0;
-
-//     while (input >> id >> pass)
-//     {
-//         if (id == userId && pass == password)
-//         {
-//             count = 1;
-//         }
-//         input.close();
-
-//         if (count == 1)
-//         {
-//             cout << "\n\n\t\t\t\t\tBienvenido! " << userId << endl;
-//             cout << "\t\t\t\t\tInicio de sesion exitoso\n\n"
-//                  << endl;
-//             inicio();
-//         }
-//         else
-//         {
-//             cout << "\t\t\t\t\tInicio de sesion fallido\n\n"
-//                  << endl;
-//             inicio();
-//         }
-//     }
-// }
 
 // // void registrarAsistencia(time_t horaEntrada_t)
 // // {

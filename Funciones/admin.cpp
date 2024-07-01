@@ -96,7 +96,8 @@ void registrarEmpleado()
     cin >> empleados[numEmpleados].infoUsuario.id;
     if (empleados[numEmpleados].infoUsuario.id < 0)
     {
-        cout << "El id no puede ser negativo" << endl;
+    cout  << "El id no puede ser negativo" <<  endl;
+
         system("pause");
         return;
     }
@@ -291,4 +292,3 @@ void mostrarTodosLosEmpleados()
     }
     system("pause");
 }
-
