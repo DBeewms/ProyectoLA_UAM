@@ -260,9 +260,10 @@ int iniciarSesionEmpleado()
          << endl;
     cout << "\t\t\t _________________________________\n";
     cout << "\t\t\t   -\\\\- Inicio de Sesion -\\\\-   \n\n";
-    cout << "\t\t\t\t\t USUARIO: ";
-    cin >> usuario.id;
-    cout << "\t\t\t\t\t CONTRASENIA: ";
+    cout << "\t\t\t\t\t CEDULA: ";
+    fflush(stdin);
+   cin.getline(usuario.cedula, MAX_CEDULA + 1);
+    cout << "\t\t\t\t\t CLAVE: ";
     fflush(stdin);
     cin.getline(usuario.clave, SIZE_PASS + 1);
     cout << "\n\n";
@@ -271,7 +272,7 @@ int iniciarSesionEmpleado()
 
     for (int i = 0; i < numEmpleados; i++)
     {
-        if (usuario.id == empleados[i].infoUsuario.id )
+        if (strcmp(usuario.cedula, empleados[i].infoUsuario.cedula) == 0)
         {
             if (strcmp(usuario.clave, empleados[i].infoUsuario.clave) == 0)
             {

@@ -7,10 +7,10 @@
 
 using namespace std;
 
-// // Usar estas variables al implementar las funciones:
+// // // Usar estas variables al implementar las funciones:
 
-// // time_t horaEntrada_t, horaSalida_t;
-// // pair<time_t, time_t> horasEntradaSalida;
+// // // time_t horaEntrada_t, horaSalida_t;
+// // // pair<time_t, time_t> horasEntradaSalida;
 
 // // void pedirFecha();
 // // pair<time_t, time_t> ingresarEntradaSalida();
@@ -21,6 +21,7 @@ using namespace std;
 // // horaEntrada_t = horasEntradaSalida.first;
 // // horaSalida_t = horasEntradaSalida.second;
 
+// //Para ingresar la hora de entrada y salida del empleado
 // pair<time_t, time_t> ingresarEntradaSalida();
 
 // pair<time_t, time_t> ingresarEntradaSalida()
@@ -83,6 +84,7 @@ void generarContrasena(char *contrasena)
 // Para registrar a un nuevo empleado
 void registrarEmpleado()
 {
+    char cedulaTemp[100]; // Para almacenamiento de tamaño mas grande que la cedula requerida
     system("cls || clear");
 
     // Pedimos los datos del empleado
@@ -91,25 +93,27 @@ void registrarEmpleado()
     cin.getline(empleados[numEmpleados].nombre, MAX_STR, '\n');
     cout << "Ingrese el apellido del empleado: ";
     cin.getline(empleados[numEmpleados].apellido, MAX_STR, '\n');
-    cout << "Ingrese el id de usuario: ";
-    fflush(stdin);
-    cin >> empleados[numEmpleados].infoUsuario.id;
-    if (empleados[numEmpleados].infoUsuario.id < 0)
-    {
-    cout  << "El id no puede ser negativo" <<  endl;
+    // Para solicitar la cedula
+    cout << "Ingrese la cédula (exactamente " << MAX_CEDULA << " caracteres): ";
 
-        system("pause");
-        return;
+    cin.getline(cedulaTemp, sizeof(cedulaTemp)); // Leer la entrada del usuario
+
+    while (strlen(cedulaTemp) != MAX_CEDULA)
+    {
+        cout << "Error: La cédula debe tener exactamente 10 caracteres. Inténtelo de nuevo." << endl;
+        cout << "Ingrese la cédula (exactamente 10 caracteres): ";
+        cin.getline(cedulaTemp, sizeof(cedulaTemp)); // Leer la entrada del usuario
     }
     for (int i = 0; i < numEmpleados; i++)
     {
-        if (empleados[i].infoUsuario.id == empleados[numEmpleados].infoUsuario.id)
+        if (strcmp(empleados[i].infoUsuario.cedula, cedulaTemp) == 0)
         {
-            cout << "El id ya existe" << endl;
+            cout << "La Cedula: ya existe" << endl;
             system("pause");
             return;
         }
     }
+    strncpy(empleados[numEmpleados].infoUsuario.cedula, cedulaTemp, MAX_CEDULA + 1); // Copiar la cédula válida al destino
 
     cout << "Se generara la clave automaticamente" << endl;
 
@@ -135,7 +139,7 @@ void imprimirDatosEmpleado(int index)
         // Imprimimos los datos del empleado
         cout << "Nombre: " << empleados[index].nombre << endl;
         cout << "Apellido: " << empleados[index].apellido << endl;
-        cout << "Id de usuario: " << empleados[index].infoUsuario.id << endl;
+        cout << "Cedula: " << empleados[index].infoUsuario.cedula << endl;
         cout << "PIN: " << empleados[index].infoUsuario.clave << endl;
     }
 }
@@ -143,6 +147,7 @@ void imprimirDatosEmpleado(int index)
 // Para editar a un empleado
 void editarEmpleado()
 {
+    char cedulaTemp[100]; // Para almacenamiento de tamaño mas grande que la cedula requerida
     system("cls || clear");
     int index = buscarEmpleado();
     imprimirDatosEmpleado(index);
@@ -159,7 +164,7 @@ void editarEmpleado()
         cout << "Que deseas editar?" << endl;
         cout << "1. Nombre " << endl;
         cout << "2. Apellido" << endl;
-        cout << "3. id" << endl;
+        cout << "3. Cedula" << endl;
         cout << "4. clave" << endl;
         cout << "5. Salir" << endl;
         cout << "Elige tu opcion: " << endl;
@@ -188,11 +193,30 @@ void editarEmpleado()
             break;
 
         case 3:
-            cout << "La id actual es: " << empleados[index].infoUsuario.id << endl;
-            cout << "Ingrese la nueva id: ";
+            cout << "La cedula actual es: " << empleados[index].infoUsuario.cedula << endl;
             fflush(stdin);
-            cin >> empleados[index].infoUsuario.id;
-            cout << "La nueva id es: " << empleados[index].infoUsuario.id << endl;
+            cout << "Ingrese la nueva cédula (exactamente " << MAX_CEDULA << " caracteres): ";
+
+            cin.getline(cedulaTemp, sizeof(cedulaTemp)); // Leer la entrada del usuario
+
+            while (strlen(cedulaTemp) != MAX_CEDULA)
+            {
+                cout << "Error: La cédula debe tener exactamente 10 caracteres. Inténtelo de nuevo." << endl;
+                cout << "Ingrese la cédula (exactamente 10 caracteres): ";
+                cin.getline(cedulaTemp, sizeof(cedulaTemp)); // Leer la entrada del usuario
+            }
+            for (int i = 0; i < numEmpleados; i++)
+            {
+                if (strcmp(empleados[i].infoUsuario.cedula, cedulaTemp) == 0)
+                {
+                    cout << "La Cedula: ya existe" << endl;
+                    system("pause");
+                    return;
+                }
+            }
+            strncpy(empleados[index].infoUsuario.cedula, cedulaTemp, MAX_CEDULA + 1); // Copiar la cédula válida al destino
+
+            cout << "La nueva id es: " << empleados[index].infoUsuario.cedula << endl;
             system("pause");
             break;
 
@@ -286,7 +310,7 @@ void mostrarTodosLosEmpleados()
         cout << "Empleado " << i + 1 << endl;
         cout << "Nombre: " << empleados[i].nombre << endl;
         cout << "Apellido: " << empleados[i].apellido << endl;
-        cout << "id: " << empleados[i].infoUsuario.id << endl;
+        cout << "Cedula: " << empleados[i].infoUsuario.cedula << endl;
         cout << "Clave: " << empleados[i].infoUsuario.clave << endl;
         cout << endl;
     }

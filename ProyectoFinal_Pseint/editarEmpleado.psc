@@ -44,7 +44,7 @@ Proceso editarEmpleado
 			Escribir "Ingrese la contrasenia del empleado: ";
 			escribir "Los datos del empleado son los siguientes: ";
 			Escribir "El nombre del empleado es: ", nombresEmpleados[posicion];
-			Escribir "El ID del empleado es:", cedulas[posicion];
+			Escribir "La Cedula: del empleado es:", cedulas[posicion];
 			Escribir "La contrasenia del empleado", contrasenas[posicion];
 			
 			Repetir
@@ -62,7 +62,7 @@ Proceso editarEmpleado
 						Leer nombre;
 						nombresEmpleados[posicion] <- nombre;
 					2:
-						Escribir 'Ingrese el ID actualizado del empleado:';
+						Escribir 'Ingrese La Cedula: actualizado del empleado:';
 						Leer cedula;
 						cedulas[posicion] <- cedula;
 					3:

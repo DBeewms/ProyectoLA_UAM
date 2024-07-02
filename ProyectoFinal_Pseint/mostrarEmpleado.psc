@@ -41,7 +41,7 @@ Proceso mostrarEmpleado
 			Escribir "Ingrese la contrasenia del empleado: ";
 				escribir "Los datos del empleado son los siguientes: ";
 				Escribir "El nombre del empleado es: ", nombresEmpleados[posicion];
-				Escribir "El ID del empleado es:", cedulas[posicion];
+				Escribir "La Cedula: del empleado es:", cedulas[posicion];
 				Escribir "La contrasenia del empleado", contrasenas[posicion];
 				
 		SiNo

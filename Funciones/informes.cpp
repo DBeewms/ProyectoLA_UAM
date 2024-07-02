@@ -9,44 +9,44 @@
 using namespace std;
 using namespace chrono;
 
-void pedirFecha();
-pair<time_t, time_t> ingresarEntradaSalida();
-time_t calcularHorasExtra(time_t horaSalida_t);
+// void pedirFecha();
+// pair<time_t, time_t> ingresarEntradaSalida();
+// time_t calcularHorasExtra(time_t horaSalida_t);
 
-int zeller(int anio, int mes, int dia);
-int calcularDiasMes(int mes, int anio);
+// int zeller(int anio, int mes, int dia);
+// int calcularDiasMes(int mes, int anio);
 
-pair<time_t, time_t> ingresarEntradaSalida()
-{
-    // Tomar el punto actual del calendario del sistema
-    auto now = system_clock::now();
+// pair<time_t, time_t> ingresarEntradaSalida()
+// {
+//     // Tomar el punto actual del calendario del sistema
+//     auto now = system_clock::now();
 
-    // Convertir a time_t que representa el tiempo del calendario
-    time_t now_time_t = system_clock::to_time_t(now);
+//     // Convertir a time_t que representa el tiempo del calendario
+//     time_t now_time_t = system_clock::to_time_t(now);
 
-    // Convierte a un estrucutra tm que representa la fecha y tiempo de un calendario
-    tm *now_tm = localtime(&now_time_t);
+//     // Convierte a un estrucutra tm que representa la fecha y tiempo de un calendario
+//     tm *now_tm = localtime(&now_time_t);
 
-    // Pedir hora de entrada y de salida
-    string horaEntrada_str, horaSalida_str;
-    cout << "Define la hora de entrada y salida..." << endl;
-    cout << "Hora de entrada (HH:MM:SS): ";
-    cin >> horaEntrada_str;
-    cout << "Hora de salida (HH:MM:SS): ";
-    cin >> horaSalida_str;
+//     // Pedir hora de entrada y de salida
+//     string horaEntrada_str, horaSalida_str;
+//     cout << "Define la hora de entrada y salida..." << endl;
+//     cout << "Hora de entrada (HH:MM:SS): ";
+//     cin >> horaEntrada_str;
+//     cout << "Hora de salida (HH:MM:SS): ";
+//     cin >> horaSalida_str;
 
-    // Parsear la hora de entrada y salida a tm
-    tm horaEntrada_tm = *now_tm, horaSalida_tm = *now_tm;
-    stringstream horaEntrada_ss(horaEntrada_str), horaSalida_ss(horaSalida_str);
-    horaEntrada_ss >> get_time(&horaEntrada_tm, "%H:%M:%S");
-    horaSalida_ss >> get_time(&horaSalida_tm, "%H:%M:%S");
+//     // Parsear la hora de entrada y salida a tm
+//     tm horaEntrada_tm = *now_tm, horaSalida_tm = *now_tm;
+//     stringstream horaEntrada_ss(horaEntrada_str), horaSalida_ss(horaSalida_str);
+//     horaEntrada_ss >> get_time(&horaEntrada_tm, "%H:%M:%S");
+//     horaSalida_ss >> get_time(&horaSalida_tm, "%H:%M:%S");
 
-    // Parsear las estructuras tm devuelta a time_t
-    time_t horaEntrada_t = mktime(&horaEntrada_tm);
-    time_t horaSalida_t = mktime(&horaSalida_tm);
+//     // Parsear las estructuras tm devuelta a time_t
+//     time_t horaEntrada_t = mktime(&horaEntrada_tm);
+//     time_t horaSalida_t = mktime(&horaSalida_tm);
 
-    return make_pair(horaEntrada_t, horaSalida_t);
-}
+//     return make_pair(horaEntrada_t, horaSalida_t);
+// }
 
 // Devuelve el dia de la semana
 int zeller(int anio, int mes, int dia)

@@ -22,8 +22,8 @@ void cargarEmpleadosDesdeArchivo(const char *nombreArchivo)
         {
             archivo.getline(empleados[i].nombre, MAX_STR);
             archivo.getline(empleados[i].apellido, MAX_STR);
-            archivo >> empleados[i].infoUsuario.id;
-            archivo.ignore(); // Ignorar el salto de línea después del id
+            archivo >> empleados[i].infoUsuario.cedula;
+            archivo.ignore(); // Ignorar el salto de línea:
             archivo.getline(empleados[i].infoUsuario.clave, SIZE_PASS + 1);
         }
         archivo.close();
@@ -47,7 +47,7 @@ void guardarEmpleadosEnArchivo(const char *nombreArchivo)
         {
             archivo << empleados[i].nombre << endl;
             archivo << empleados[i].apellido << endl;
-            archivo << empleados[i].infoUsuario.id << endl;
+            archivo << empleados[i].infoUsuario.cedula << endl;
             archivo << empleados[i].infoUsuario.clave << endl;
         }
         archivo.close();

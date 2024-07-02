@@ -13,20 +13,19 @@ int buscarEmpleado();
 
 int buscarEmpleado()
 {
-    int idTemporal;
-    cout << "Ingrese la id del empleado: ";
-    cin >> idTemporal;
+    char cedTemporal[MAX_CEDULA + 1];
+    fflush(stdin);
+    cout << "Ingrese la cedula del empleado: ";
+    cin.getline(cedTemporal, 50);
 
     for (int i = 0; i < numEmpleados; i++)
     {
-        if (empleados[i].infoUsuario.id == idTemporal)
+        if (strcmp(empleados[i].infoUsuario.cedula, cedTemporal) == 0)
         {
             return i;
         }
-        
     }
     cout << "No se encontro el empleado" << endl;
     system("pause");
     return -1;
 }
-

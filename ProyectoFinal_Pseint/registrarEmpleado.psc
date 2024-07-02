@@ -34,7 +34,7 @@ Proceso registrarEmpleado
 	Escribir "Ingrese el nombre del empleado: ";
 	Leer nombre;
 	nombresEmpleados[posicion] <- nombre;
-	Escribir "Ingrese el ID de empleado:";
+	Escribir "Ingrese la Cedula: de empleado:";
 	Leer cedula;
 	cedulas[posicion] <- cedula;
 	Escribir "Ingrese la contrasenia para el empleado";

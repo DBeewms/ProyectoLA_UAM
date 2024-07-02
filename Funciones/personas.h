@@ -7,7 +7,7 @@
 #define MAX_STR 50
 
 //Constantes de Inicio de Sesion
-#define MAX_ID 10
+#define MAX_CEDULA 10
 #define SIZE_PASS 4
 
 //Constante de Fechas
@@ -25,7 +25,7 @@ int numEmpleados = 0;
 //Estructuras
 struct INICIO_SESION
 {
-    int id;
+    char cedula[MAX_CEDULA + 1];
     char clave[SIZE_PASS+1];
 };
 
