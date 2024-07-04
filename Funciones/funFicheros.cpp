@@ -7,12 +7,14 @@
 
 
 
-//Se elaboraron funciones generales para cargar y guardar empleados en un archivo
+
+// EMPLEADOS
+    // Funciones generales para cargar y guardar empleados en un archivo
 void cargarEmpleadosDesdeArchivo(const char *nombreArchivo);
 void guardarEmpleadosEnArchivo(const char *nombreArchivo);
 
-// Se corre la funcion desde el inicio del programa para cargar los empleados y que se 
-// encuentren en el arreglo de empleados
+    // Se corre la funcion desde el inicio del programa para cargar los empleados y que se
+    // encuentren en el arreglo de empleados
 void cargarEmpleadosDesdeArchivo(const char *nombreArchivo)
 {
     ifstream archivo(nombreArchivo);
@@ -36,9 +38,9 @@ void cargarEmpleadosDesdeArchivo(const char *nombreArchivo)
     }
 }
 
-// Función para guardar empleados en el archivo
-//Se guarda el número de empleados y los datos de cada empleado
-//Importante para editar y eliminar empleados
+    // Función para guardar empleados en el archivo
+    // Se guarda el número de empleados y los datos de cada empleado
+    // Importante para editar y eliminar empleados
 void guardarEmpleadosEnArchivo(const char *nombreArchivo)
 {
     ofstream archivo(nombreArchivo);

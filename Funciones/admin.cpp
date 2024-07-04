@@ -113,7 +113,7 @@ void editarEmpleado()
             system("pause");
             return;
         }
-
+        // Pedimos al usuario que campo desea editar
         cout << "Que deseas editar?" << endl;
         cout << "1. Nombre " << endl;
         cout << "2. Apellido" << endl;
@@ -230,17 +230,20 @@ void eliminarEmpleado()
                 // Disminuimos el contador de empleados
                 numEmpleados--;
                 // Guardar los cambios en el archivo
-                guardarEmpleadosEnArchivo("empleados.txt");
+               
                 cout << "Empleado eliminado exitosamente" << endl;
+                 guardarEmpleadosEnArchivo("empleados.txt");
+
                 system("pause");
                 break;
-
             case 2:
                 cout << "Saliendo..." << endl;
+
                 system("pause");
                 break;
             default:
                 cout << "Opcion no valida" << endl;
+
                 system("pause");
                 break;
             }
@@ -250,7 +253,9 @@ void eliminarEmpleado()
             cout << "No puedes eliminar el unico empleado" << endl;
             system("pause");
         }
+        
     }
+    
 }
 
 // Para mostrar a todos los empleados

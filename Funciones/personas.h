@@ -2,6 +2,9 @@
 #include <iostream>
 #include <string>
 
+//Clave Admin
+int claveAdmin = 1234;
+
 //Constantes de empleados
 #define MAX_EMPLEADOS 100
 #define MAX_STR 50
@@ -48,23 +51,4 @@ struct EMPLEADO
     struct FECHAS arreglosFechas[MAX_FECHAS];
 } empleados[MAX_EMPLEADOS];
 
-// typedef struct PERSONA
-// {
-//     char nombre;
-//     char apellido;
-//     char id;
-//     char fechas[MAX_FECHAS];
-//     char horas[MAX_HORAS];
-//     int asistencias[MAX_ASISTENCIAS];
-//     int llegadaTarde[MAX_LLEGADA_TARDE];
-//     int inasistencias;
-//     char horasExtras;
-//     char clave;
-//     int numFechas; // Contador para las fechas
-//     int numHoras; // Contador para las horas
-//     int numAsistencias; // Contador para asistencias
-//     int numLlegadaTarde; // Contador para llegadas tarde
-// };
 
-// PERSONA empleados[MAX_EMPLEADOS];
-// int numEmpleadosRegistrados = 0;
