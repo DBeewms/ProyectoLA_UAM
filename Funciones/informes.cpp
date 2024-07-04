@@ -1,12 +1,89 @@
 #include "personas.cpp"
 #include <iostream>
-#include <chrono>
 #include <ctime>
-#include <iomanip> // put_time
-#include <sstream> // ostringstream
+#include <chrono>
+#include <fstream>
 
 using namespace std;
 using namespace chrono;
+
+time_t horaEntrada_t, horaSalida_t;
+char horaEntrada_str[9], horaSalida_str[9];
+
+    // Caso de uso
+
+    // ingresarEntradaSalida();
+
+    // // Guardar las horas en un archivo
+    // guardarHoras();
+
+    // // Leer las horas desde el archivo
+    // leerHoras();
+    // cout << "Hora de entrada: " << horaEntrada_str << endl;
+    // cout << "Hora de salida: " << horaSalida_str << endl;
+
+
+void ingresarEntradaSalida()
+{
+    // Tomar el punto actual del calendario del sistema
+    auto now = system_clock::now();
+
+    // Convertir a time_t que representa el tiempo del calendario
+    time_t now_time_t = system_clock::to_time_t(now);
+
+    // Convertir a una estructura tm que representa la fecha y tiempo de un calendario
+    tm *now_tm = localtime(&now_time_t);
+
+    // Pedir hora de entrada y de salida
+    cout << "Define la hora de entrada y salida..." << endl;
+    cout << "Hora de entrada (HH:MM:SS): ";
+    cin.getline(horaEntrada_str, 9);
+    cout << "Hora de salida (HH:MM:SS): ";
+    cin.getline(horaSalida_str, 9);
+
+    // Parsear la hora de entrada y salida a tm
+    tm horaEntrada_tm = *now_tm, horaSalida_tm = *now_tm;
+    sscanf(horaEntrada_str, "%2d:%2d:%2d", &horaEntrada_tm.tm_hour, &horaEntrada_tm.tm_min, &horaEntrada_tm.tm_sec);
+    sscanf(horaSalida_str, "%2d:%2d:%2d", &horaSalida_tm.tm_hour, &horaSalida_tm.tm_min, &horaSalida_tm.tm_sec);
+
+    // Parsear las estructuras tm devueltas a time_t
+    horaEntrada_t = mktime(&horaEntrada_tm);
+    horaSalida_t = mktime(&horaSalida_tm);
+}
+
+// Función para guardar las horas en un archivo usando char[]
+void guardarHoras() {
+    ofstream file("horaEntradaSalida.txt");
+
+    if (file.is_open()) {
+        // Guardar las representaciones de cadena
+        file << horaEntrada_str << "\n";
+        file << horaSalida_str << "\n";
+        // Guardar los valores time_t
+        file << horaEntrada_t << "\n";
+        file << horaSalida_t << "\n";
+        file.close();
+    } else {
+        cout << "No se pudo abrir el archivo para escribir." << endl;
+    }
+}
+
+// Función para leer las horas desde un archivo usando char[] y time_t
+void leerHoras() {
+    ifstream file("horaEntradaSalida.txt");
+
+    if (file.is_open()) {
+        file.getline(horaEntrada_str, sizeof(horaEntrada_str));
+        file.getline(horaSalida_str, sizeof(horaSalida_str));
+        // Leer los valores time_t
+        file >> horaEntrada_t;
+        file >> horaSalida_t;
+        file.close();
+    } else {
+        cout << "No se pudo abrir el archivo para leer." << endl;
+    }
+}
+
 
 // // Usar estas variables al implementar las funciones:
 
