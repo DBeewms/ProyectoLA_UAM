@@ -5,15 +5,20 @@
 
 using namespace std;
 // Prototipos de funciones
-void menuInicioSesion();
-void menuAdministrador();
-void menuEmpleado(int index);
-void loginEmpleado();
+    //Menu Principal
+void menuPrincipal();
 
-// Inicios de Sesion
+    //Menus para Administrador
+void menuAdministrador();
+        //Informes Administrador
+ void menuDeInformesAdministrador();
+
+    //Menus para Empleados
+void menuEmpleado(int index);
+void menuInicioSesionEmpleado();
 int iniciarSesionEmpleado();
 // Definicion de funciones
-void menuInicioSesion()
+void menuPrincipal()
 {
     cargarEmpleadosDesdeArchivo("empleados.txt");
     // Variables Locales
@@ -61,7 +66,7 @@ void menuInicioSesion()
             break;
 
         case 2:
-            loginEmpleado();
+            menuInicioSesionEmpleado();
             break;
 
         case 3:
@@ -99,7 +104,9 @@ void menuAdministrador()
         cout << "\t|                            |                                     \t\t\t" << endl;
         cout << "\t| 5. Lista de Empleados      |                                     \t\t\t" << endl;
         cout << "\t|                            |                                     \t\t\t" << endl;
-        cout << "\t| 6. Salir                   |                                     \t\t\t" << endl;
+        cout << "\t| 6. Informe de asistencias  |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 7. Salir                   |                                     \t\t\t" << endl;
         cout << "\t|____________________________|                                     \t\t\t\n\n"
              << endl;
         cout << "\t-------------------------------------------------------------------- \t\t\t" << endl
@@ -132,6 +139,9 @@ void menuAdministrador()
             mostrarTodosLosEmpleados();
             break;
         case 6:
+            menuDeInformesAdministrador();
+        break;
+        case 7:
             system("cls || clear");
             cout << "Saliendo..." << endl;
             system("pause");
@@ -143,7 +153,7 @@ void menuAdministrador()
 
     } while (opcion != 3);
 }
-void loginEmpleado()
+void menuInicioSesionEmpleado()
 {
     int opcion;
     do
@@ -197,8 +207,8 @@ void menuEmpleado(int index)
         system("cls || clear");
         // Menu de empleado
         cout << "\t\t\t _________________________________________________________________\t\t\t" << endl;
-        cout << "\t\t\t            Bienvenido a la pagina de Empleado                    \t\t\t" << endl;
-        cout << "\t\t\t                            --- MENU ---                           \t\t\t" << endl;
+        cout << "\t\t\t                  Bienvenido a la pagina de Empleado                    \t\t\t" << endl;
+        cout << "\t\t\t                             --- MENU ---                           \t\t\t" << endl;
         cout << "\t\t\t__________________________________________________________________\t\t\t" << endl;
         cout << "\t ____________________________                                      \t\t\t" << endl;
         cout << "\t|                            |                                     \t\t\t" << endl;

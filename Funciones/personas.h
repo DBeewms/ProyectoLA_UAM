@@ -12,6 +12,7 @@
 
 //Constante de Fechas
 #define MAX_LONG_FECHA 10
+#define MAX_LONG_HORAS 10
 #define MAX_FECHAS 100
 #define MAX_ASISTENCIAS 100
 
@@ -32,8 +33,9 @@ struct INICIO_SESION
 struct FECHAS
 {
     int asistencia;
-    int llegadaTarde;
+    int llegadaEmpleado;
     char fechaRegistrada[MAX_LONG_FECHA];
+    char horaRegistrada[MAX_LONG_HORAS];
     int mesDeFecha;
     int diasDelMes;
 };

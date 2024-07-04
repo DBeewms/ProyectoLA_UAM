@@ -2,59 +2,12 @@
 #include <string.h>
 #include <fstream>
 #include <ctime>
-#include <chrono>
+#include <iomanip> // put_time
+#include <sstream> // ostringstream
 #include "informes.cpp"
 
 using namespace std;
 
-// // // Usar estas variables al implementar las funciones:
-
-// // // time_t horaEntrada_t, horaSalida_t;
-// // // pair<time_t, time_t> horasEntradaSalida;
-
-// // void pedirFecha();
-// // pair<time_t, time_t> ingresarEntradaSalida();
-// // void registrarAsistencia(time_t horaEntrada_t);
-// // time_t calcularHorasExtra(time_t horaSalida_t);
-
-// // horasEntradaSalida = ingresarEntradaSalida();
-// // horaEntrada_t = horasEntradaSalida.first;
-// // horaSalida_t = horasEntradaSalida.second;
-
-// //Para ingresar la hora de entrada y salida del empleado
-// pair<time_t, time_t> ingresarEntradaSalida();
-
-// pair<time_t, time_t> ingresarEntradaSalida()
-// {
-//     // Tomar el punto actual del calendario del sistema
-//     auto now = system_clock::now();
-
-//     // Convertir a time_t que representa el tiempo del calendario
-//     time_t now_time_t = system_clock::to_time_t(now);
-
-//     // Convierte a un estrucutra tm que representa la fecha y tiempo de un calendario
-//     tm *now_tm = localtime(&now_time_t);
-
-//     // Pedir hora de entrada y de salida
-//     string horaEntrada_str, horaSalida_str;
-//     cout << "Define la hora de entrada y salida..." << endl;
-//     cout << "Hora de entrada (HH:MM:SS): ";
-//     cin >> horaEntrada_str;
-//     cout << "Hora de salida (HH:MM:SS): ";
-//     cin >> horaSalida_str;
-
-//     // Parsear la hora de entrada y salida a tm
-//     tm horaEntrada_tm = *now_tm, horaSalida_tm = *now_tm;
-//     stringstream horaEntrada_ss(horaEntrada_str), horaSalida_ss(horaSalida_str);
-//     horaEntrada_ss >> get_time(&horaEntrada_tm, "%H:%M:%S");
-//     horaSalida_ss >> get_time(&horaSalida_tm, "%H:%M:%S");
-
-//     // Parsear las estructuras tm devuelta a time_t
-//     time_t horaEntrada_t = mktime(&horaEntrada_tm);
-//     time_t horaSalida_t = mktime(&horaSalida_tm);
-
-//     return make_pair(horaEntrada_t, horaSalida_t);
-// }
 
 // Generar clave aleatoria
 void generarContrasena(char *contrasena);

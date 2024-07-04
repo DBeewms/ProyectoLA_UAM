@@ -5,6 +5,8 @@
 #include <chrono>
 #include "personas.h"
 
+
+
 //Se elaboraron funciones generales para cargar y guardar empleados en un archivo
 void cargarEmpleadosDesdeArchivo(const char *nombreArchivo);
 void guardarEmpleadosEnArchivo(const char *nombreArchivo);
