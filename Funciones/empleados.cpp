@@ -1,21 +1,27 @@
+#include "admin.cpp"
 #include <iostream>
 #include <chrono>
 #include <ctime>
-#include <iomanip> // put_time
-#include <sstream> // ostringstream
-#include "admin.cpp"
+#include <iomanip>
+#include <time.h>
+#include <fstream>
+#include <cstring>
 
 int anio, mes, dias;
 
 using namespace std;
 
+// Funciones para el empleado
 
-
-//Funciones para el empleado
-    //Imprimir sus propios datos
+// Imprimir sus propios datos
 void imprimirDatosEmpleadoEnEmpleados(int index);
-    //Registrar su asistencia
-void registrarAsistencia(time_t horaEntrada_t);
+// Registrar su asistencia
+void registrarAsistencia(time_t horaEntrada_t, int indexEmpleado);
+// Cargar las fechas desde un archivo CSV
+void cargarFechasDesdeCSV(int indexEmpleado);
+// Cargar las fechas para todos los empleados
+void cargarFechasParaTodosLosEmpleados();
+
 
 void imprimirDatosEmpleadoEnEmpleados(int index)
 {
@@ -27,126 +33,210 @@ void imprimirDatosEmpleadoEnEmpleados(int index)
     system("pause");
 }
 
+void registrarAsistencia(time_t horaEntrada_t, int indexEmpleado)
+{
+    int indexFechas = -1;
+    // Tomar el punto actual del calendario del sistema
+    auto now = system_clock::now();
 
-// void registrarAsistencia(time_t horaEntrada_t, int indexEmpleado)
-// {
-//     int indexFechas = -1;
-//     // Tomar el punto actual del calendario del sistema
-//     auto now = system_clock::now();
+    // Convertir a time_t que representa el tiempo del calendario
+    time_t now_time_t = system_clock::to_time_t(now);
 
-//     // Convertir a time_t que representa el tiempo del calendario
-//     time_t now_time_t = system_clock::to_time_t(now);
+    // Convierte a una estructura tm que representa la fecha y tiempo de un calendario
+    tm *now_tm = localtime(&now_time_t);
 
-//     // Convierte a un estrucutra tm que representa la fecha y tiempo de un calendario
-    
-//     tm *now_tm = localtime(&now_time_t);
-    
-//     //Representación textual de una fecha para mostrarla al usuario
-//         // Crea un stringstream para formatear la fecha
-//     ostringstream date_stream_fecha;
-//     date_stream_fecha << put_time(now_tm, "%d-%m-%Y");
-//         //La fecha se escribirá en el formato de día-mes-año como cadena
-//     string formatted_date = date_stream_fecha.str();
+    // Representación textual de una fecha y hora para mostrarla al usuario
+    char formatted_date[11]; // Aumentamos el tamaño para el terminador de cadena
+    strftime(formatted_date, sizeof(formatted_date), "%d-%m-%Y", now_tm);
 
-//     // Crea un stringstream para formatear la hora
-//     ostringstream date_stream_hora;
-//     date_stream_hora << put_time(now_tm, "%H:%M:%S");
-//     // Guarda la hora formateada como cadena
-//     string formatted_hora = date_stream_hora.str();
+    char formatted_hora[9]; // Aumentamos el tamaño para el terminador de cadena
+    strftime(formatted_hora, sizeof(formatted_hora), "%H:%M:%S", now_tm);
 
-//     // Tomar el formato de la hora local para el calculo de la diferencia
-//     tm formatoHoraActual_tm = *now_tm;
-//     stringstream formatoHoraActual_ss(formatted_hora);
-//     formatoHoraActual_ss >> get_time(&formatoHoraActual_tm, "%H:%M:%S");
+    // Tomar el formato de la hora local para el cálculo de la diferencia
+    tm formatoHoraActual_tm = *now_tm;
+    int horas, minutos, segundos;
+    sscanf(formatted_hora, "%d:%d:%d", &horas, &minutos, &segundos);
 
-//     // Parsear las estructuras tm devuelta a time_t
-//     time_t formatoHoraActual_t = mktime(&formatoHoraActual_tm);
+    // Ajustar la estructura tm
+    formatoHoraActual_tm.tm_hour = horas;
+    formatoHoraActual_tm.tm_min = minutos;
+    formatoHoraActual_tm.tm_sec = segundos;
 
-//     // Calcula la diferencia en segundos
-//     double diferenciaSegundos = difftime(formatoHoraActual_t, horaEntrada_t);
+    // Parsear las estructuras tm devuelta a time_t
+    time_t formatoHoraActual_t = mktime(&formatoHoraActual_tm);
 
-//     // Convierte a minutos
-//     double diferenciaMinutos = (diferenciaSegundos / 60);
+    // Calcula la diferencia en segundos
+    double diferenciaSegundos = difftime(formatoHoraActual_t, horaEntrada_t);
 
-//     // Lapso de tiempo de 5 min para la tolerancia
-//     double tolerancia = 5.0;
+    // Convierte a minutos
+    double diferenciaMinutos = (diferenciaSegundos / 60);
 
-//     if (diferenciaMinutos <= tolerancia)
-//     {
-//         //Conversion de strings a char
-//         char formatted_date_char[9];
-//         strcpy(formatted_date_char, formatted_date.c_str());
+    // Lapso de tiempo de 5 min para la tolerancia
+    double tolerancia = 5.0;
 
-//         char formatted_hora_char[9];
-//         strcpy(formatted_hora_char, formatted_hora.c_str());
-        
-//         // Guardar la asistencia en el arreglo
-//             // Asistencia en tiempo
+    // Encontrar la posición vacía en el arreglo de Fechas
+    for (int i = 0; i < MAX_FECHAS; i++)
+    {
+        if (empleados[indexEmpleado].arreglosFechas[i].fechaRegistrada[0] == '\0')
+        {
+            indexFechas = i;
+            break;
+        }
+    }
+    if (indexFechas == -1)
+    {
+        cout << "Lo lamentamos, el registro de fechas ha alcanzado su límite" << endl;
+        return;
+    }
 
-//         //Encontrar la posicion vacia en el arreglo de Fechas
-//         for (int i = 0; i < MAX_FECHAS; i++)//Ciclo para encontrar la primera posicion vacia
-//         {
-//             if (empleados[indexEmpleado].arreglosFechas[i].fechaRegistrada[0] == '\0')
-//             {
-//                 indexFechas = i;
-//                 break;
-//             }
-//         }
-//         if (indexFechas = -1)
-//         {
-//             cout << "Lo lamentamos, el registro de fechas ha alcanzado su limite" << endl;
-//             return;
-//         }
-        
+    int mesActual = now_tm->tm_mon + 1;      // tm_mon es 0-indexado
+    int anioActual = now_tm->tm_year + 1900; // tm_year cuenta desde 1900
 
-//             //Agregar la fecha formateada al arreglo.
-//         strcpy(empleados[indexEmpleado].arreglosFechas[indexFechas].fechaRegistrada, formatted_date_char);
-                
-//             //Agregar la hora formateada al arreglo.
-//         strcpy(empleados[indexEmpleado].arreglosFechas[indexFechas].horaRegistrada, formatted_hora_char);
-        
-//             //Marcar la asistencia del empleado
-//             /*0 en asistencia indica una inasistencia, mientras que 1 indica que el empleado asistio*/
-//         empleados[indexEmpleado].arreglosFechas[indexFechas].asistencia = 1;
+    int diasDelMes = calcularDiasDelMes(mesActual, anioActual);
 
-//             //Marcar como llegada puntual
-//             /*0 en llegadaEmpleado indica que el empleado llego a tiempo, mientras que 1 indica que llego tarde*/
-//         empleados[indexEmpleado].arreglosFechas[indexFechas].llegadaEmpleado = 0;
-//     }
-//     else
-//     {
-//         //Conversion de strings a char
-//         char formatted_date_char[9];
-//         strcpy(formatted_date_char, formatted_date.c_str());
+    // Agregar la fecha y hora formateada al arreglo.
+    strcpy(empleados[indexEmpleado].arreglosFechas[indexFechas].fechaRegistrada, formatted_date);
+    strcpy(empleados[indexEmpleado].arreglosFechas[indexFechas].horaRegistrada, formatted_hora);
 
-//         char formatted_hora_char[9];
-//         strcpy(formatted_hora_char, formatted_hora.c_str());
-        
-//         // Guardar la asistencia en el arreglo
-//             // Asistencia en tiempo
+    empleados[indexEmpleado].arreglosFechas[indexFechas].mesDeFecha = mesActual;
+    empleados[indexEmpleado].arreglosFechas[indexFechas].diasDelMes = diasDelMes;
 
-//         //Encontrar la posicion vacia en el arreglo de Fechas
-//         for (int i = 0; i < MAX_FECHAS; i++)//Ciclo para encontrar la primera posicion vacia
-//         {
-//             if (empleados[indexEmpleado].arreglosFechas[i].fechaRegistrada[0] == '\0')
-//             {
-//                 indexFechas = i;
-//                 break;
-//             }
-//         }
+    // Marcar la asistencia del empleado
+    empleados[indexEmpleado].arreglosFechas[indexFechas].asistencia = 1;
 
-//             //Agregar la fecha formateada al arreglo.
-//         strcpy(empleados[indexEmpleado].arreglosFechas[indexFechas].fechaRegistrada, formatted_date_char);
-                
-//             //Agregar la hora formateada al arreglo.
-//         strcpy(empleados[indexEmpleado].arreglosFechas[indexFechas].horaRegistrada, formatted_hora_char);
-        
-//             //Marcar la asistencia del empleado
-//             /*0 en asistencia indica una inasistencia, mientras que 1 indica que el empleado asistio*/
-//         empleados[indexEmpleado].arreglosFechas[indexFechas].asistencia = 1;
+    // Marcar como llegada puntual o tarde
+    empleados[indexEmpleado].arreglosFechas[indexFechas].llegadaEmpleado = (diferenciaMinutos <= tolerancia) ? 0 : 1;
 
-//             //Marcar como llegada tarde
-//             /*0 en llegadaEmpleado indica que el empleado llego a tiempo, mientras que 1 indica que llego tarde*/
-//         empleados[indexEmpleado].arreglosFechas[indexFechas].llegadaEmpleado = 1;
-//     }
-// }
+    char nombreArchivo[19]; 
+    strcpy(nombreArchivo, empleados[indexEmpleado].infoUsuario.cedula);
+    strcat(nombreArchivo, ".csv");
+
+    // Verificar si el archivo ya existe para decidir si se añade la cabecera
+    bool archivoExiste = ifstream(nombreArchivo).good();
+
+    // Abrir o crear el archivo en modo append
+    ofstream archivo(nombreArchivo, ios::app);
+
+    if (!archivo.is_open())
+    {
+        cout << "Error al abrir o crear el archivo para el empleado con cédula: " << empleados[indexEmpleado].infoUsuario.cedula << endl;
+        return;
+    }
+
+    // Si el archivo no existía, añadir cabecera
+    if (!archivoExiste)
+    {
+        archivo << "Fecha,Hora,Asistencia,Llegada,Mes de la fecha,Días del mes\n";
+    }
+
+    // Escribir los datos en formato CSV
+    archivo << empleados[indexEmpleado].arreglosFechas[indexFechas].fechaRegistrada << ","
+            << empleados[indexEmpleado].arreglosFechas[indexFechas].horaRegistrada << ","
+            << (empleados[indexEmpleado].arreglosFechas[indexFechas].asistencia ? "Presente" : "Ausente") << ","
+            << (empleados[indexEmpleado].arreglosFechas[indexFechas].llegadaEmpleado ? "Tarde" : "A tiempo") << ","
+            << empleados[indexEmpleado].arreglosFechas[indexFechas].mesDeFecha << ","
+            << empleados[indexEmpleado].arreglosFechas[indexFechas].diasDelMes << "\n";
+
+    archivo.close();
+}
+
+void cargarFechasDesdeCSV(int indexEmpleado)
+{
+    char nombreArchivo[50];
+    char cedulaTemp[MAX_CEDULA + 1];
+
+    strncpy(cedulaTemp, empleados[indexEmpleado].infoUsuario.cedula, MAX_CEDULA);
+    cedulaTemp[MAX_CEDULA] = '\0';
+
+    sprintf(nombreArchivo, "%s.csv", cedulaTemp);
+
+    ifstream archivo(nombreArchivo);
+    if (!archivo.is_open())
+    {
+        cout << "No se pudo abrir el archivo para el empleado con cédula: " << cedulaTemp << endl;
+        return;
+    }
+
+    char linea[256];
+    archivo.getline(linea, 256); // Omitir la cabecera
+
+    while (archivo.getline(linea, 256))
+    {
+        FECHAS fecha;
+        int campoActual = 0;
+        char campoBuffer[256];
+        int bufferIndex = 0;
+
+        for (int i = 0; linea[i] != '\0'; ++i)
+        {
+            if (linea[i] == ',' || linea[i] == '\n' || linea[i + 1] == '\0')
+            {
+                campoBuffer[bufferIndex] = '\0'; // Finalizar el string actual
+
+                // Asignar el campoBuffer al campo correspondiente
+                switch (campoActual)
+                {
+                case 0:
+                    strncpy(fecha.fechaRegistrada, campoBuffer, MAX_LONG_FECHA);
+                    break;
+                case 1:
+                    strncpy(fecha.horaRegistrada, campoBuffer, MAX_LONG_HORAS);
+                    break;
+                case 2:
+                    fecha.asistencia = (strcmp(campoBuffer, "Presente") == 0) ? 1 : 0;
+                    break;
+                case 3:
+                    fecha.llegadaEmpleado = (strcmp(campoBuffer, "A tiempo") == 0) ? 0 : 1;
+                    break;
+                case 4:
+                    fecha.mesDeFecha = atoi(campoBuffer);
+                    break;
+                case 5:
+                    fecha.diasDelMes = atoi(campoBuffer);
+                    break;
+                }
+
+                campoActual++;
+                bufferIndex = 0; // Resetear el índice para el siguiente campo
+                if (linea[i] == '\n')
+                    break; // Si es el final de la línea, salir del bucle
+            }
+            else
+            {
+                campoBuffer[bufferIndex++] = linea[i]; // Agregar el carácter actual al buffer
+            }
+        }
+
+        // Encontrar el empleado y asignar la fecha
+        for (int i = 0; i < MAX_EMPLEADOS; i++)
+        {
+            if (strcmp(empleados[i].infoUsuario.cedula, cedulaTemp) == 0)
+            {
+                // Encontrar una posición libre en el arreglo de fechas
+                for (int j = 0; j < MAX_FECHAS; j++)
+                {
+                    if (empleados[i].arreglosFechas[j].fechaRegistrada[0] == '\0')
+                    { // Si la fecha está vacía, asignar la fecha
+                        empleados[i].arreglosFechas[j] = fecha;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    archivo.close();
+}
+
+void cargarFechasParaTodosLosEmpleados()
+{
+    for (int i = 0; i < MAX_EMPLEADOS; i++)
+    {
+        if (empleados[i].infoUsuario.cedula[0] != '\0')
+        { // Asumiendo que una cédula no vacía indica un empleado válido
+            cargarFechasDesdeCSV(i);
+        }
+    }
+}
+
