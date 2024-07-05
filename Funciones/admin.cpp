@@ -100,6 +100,12 @@ void editarEmpleado()
 {
     char cedulaTemp[100];
     system("cls || clear");
+    if (numEmpleados == 0)
+    {
+        cout << "No hay empleados registrados" << endl;
+        system("pause");
+        return;
+    }
     int index = buscarEmpleado();
     imprimirDatosEmpleado(index);
     int opcion;
@@ -108,12 +114,7 @@ void editarEmpleado()
 
     if (index != -1)
     {
-        if (numEmpleados == 0)
-        {
-            cout << "No hay empleados registrados" << endl;
-            system("pause");
-            return;
-        }
+
         // Pedimos al usuario que campo desea editar
         cout << "Que deseas editar?" << endl;
         cout << "1. Nombre " << endl;
@@ -247,82 +248,81 @@ void eliminarEmpleado()
 {
     int opcion;
     system("cls || clear");
+    if (numEmpleados == 0)
+    {
+        cout << "No hay empleados registrados" << endl;
+        system("pause");
+        return;
+    }
     int index = buscarEmpleado();
     imprimirDatosEmpleado(index);
 
     if (index != -1)
     {
-        if (numEmpleados > 1)
+
+        cout << "Estas seguro de que deseas eliminar este empleado?" << endl;
+        cout << "1. Si" << endl;
+        cout << "2. No" << endl;
+        cout << "Elige tu opcion: ";
+        cin >> opcion;
+        switch (opcion)
         {
-            cout << "Estas seguro de que deseas eliminar este empleado?" << endl;
-            cout << "1. Si" << endl;
-            cout << "2. No" << endl;
-            cout << "Elige tu opcion: ";
-            cin >> opcion;
-            switch (opcion)
+        case 1:
+            system("cls || clear");
+            // Eliminamos el empleado del arreglo
+
+            for (int i = index; i < numEmpleados - 1; i++)
             {
-            case 1:
-                system("cls || clear");
-                // Eliminamos el empleado del arreglo
-
-                for (int i = index; i < numEmpleados - 1; i++)
-                {
-                    // El empleado a eliminar se sobreescribe con el siguiente empleado
-                    empleados[i] = empleados[i + 1];
-                }
-
-                // Eliminar el archivo de informe del empleado
-                char nombreInforme[35];
-                sprintf(nombreInforme, "informe%s.txt", empleados[index].infoUsuario.cedula);
-
-                if (remove(nombreInforme) != 0)
-                {
-                    cout << "Error al eliminar el archivo de informe del empleado." << endl;
-                }
-                else
-                {
-                    cout << "Archivo de informe del empleado eliminado exitosamente." << endl;
-                }
-
-                // Disminuimos el contador de empleados
-                numEmpleados--;
-
-                // Construir el nombre del archivo .csv a eliminar
-                char nombreArchivo[30];
-                sprintf(nombreArchivo, "%s.csv", empleados[index].infoUsuario.cedula);
-
-                // Eliminar el archivo .csv del empleado
-                if (remove(nombreArchivo) != 0)
-                {
-                    cout << "Error al eliminar el archivo del empleado." << endl;
-                }
-                else
-                {
-                    cout << "Archivo del empleado eliminado exitosamente." << endl;
-                }
-
-                // Guardar los cambios en el archivo
-                cout << "Empleado eliminado exitosamente" << endl;
-                guardarEmpleadosEnArchivo("empleados.txt");
-
-                system("pause");
-                break;
-            case 2:
-                cout << "Saliendo..." << endl;
-
-                system("pause");
-                break;
-            default:
-                cout << "Opcion no valida" << endl;
-
-                system("pause");
-                break;
+                // El empleado a eliminar se sobreescribe con el siguiente empleado
+                empleados[i] = empleados[i + 1];
             }
-        }
-        else
-        {
-            cout << "No puedes eliminar el unico empleado" << endl;
+
+            // Eliminar el archivo de informe del empleado
+            char nombreInforme[35];
+            sprintf(nombreInforme, "informe%s.txt", empleados[index].infoUsuario.cedula);
+
+            if (remove(nombreInforme) != 0)
+            {
+                cout << "Error al eliminar el archivo de informe del empleado." << endl;
+            }
+            else
+            {
+                cout << "Archivo de informe del empleado eliminado exitosamente." << endl;
+            }
+
+            // Disminuimos el contador de empleados
+            numEmpleados--;
+
+            // Construir el nombre del archivo .csv a eliminar
+            char nombreArchivo[30];
+            sprintf(nombreArchivo, "%s.csv", empleados[index].infoUsuario.cedula);
+
+            // Eliminar el archivo .csv del empleado
+            if (remove(nombreArchivo) != 0)
+            {
+                cout << "Error al eliminar el archivo del empleado." << endl;
+            }
+            else
+            {
+                cout << "Archivo del empleado eliminado exitosamente." << endl;
+            }
+
+            // Guardar los cambios en el archivo
+            cout << "Empleado eliminado exitosamente" << endl;
+            guardarEmpleadosEnArchivo("empleados.txt");
+
             system("pause");
+            break;
+        case 2:
+            cout << "Saliendo..." << endl;
+
+            system("pause");
+            break;
+        default:
+            cout << "Opcion no valida" << endl;
+
+            system("pause");
+            break;
         }
     }
 }
@@ -331,7 +331,13 @@ void eliminarEmpleado()
 void mostrarTodosLosEmpleados()
 {
     system("cls || clear");
-    cout << "Lista de empleados" << endl;
+    if (numEmpleados == 0)
+    {
+        cout << "No hay empleados registrados\n" << endl;
+        system("pause");
+        return;
+    }
+    cout << "Lista de empleados\n" << endl;
     for (int i = 0; i < numEmpleados; i++)
     {
         cout << "Empleado " << i + 1 << endl;
