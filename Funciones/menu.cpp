@@ -13,8 +13,8 @@ void menuGeneralAdministrador();
 // Inicio Sesion
 void menuInicioSesionAdministrador();
 int iniciarSesionAdministrador();
-// // Informes Administrador
-// void menuDeInformesAdministrador();
+// Informes Administrador
+void menuDeInformesAdministrador();
 
 // Menus para Empleados
 void menuEmpleado(int index);
@@ -191,7 +191,7 @@ void menuGeneralAdministrador()
             mostrarTodosLosEmpleados();
             break;
         case 6:
-            // menuDeInformesAdministrador();
+            menuDeInformesAdministrador();
             break;
         case 7:
             ingresarEntradaSalida();
@@ -208,6 +208,80 @@ void menuGeneralAdministrador()
         }
 
     } while (opcion != 8);
+}
+
+void menuDeInformesAdministrador()
+{
+    // Variables Locales
+    int opcion;
+     int mes, anio = ANIOACTUAL;
+
+    do
+    {
+        system("cls || clear");
+        // Menu de informes
+        cout << "\t\t\t _________________________________________________________________\t\t\t" << endl;
+        cout << "\t\t\t          Bienvenido a la pagina de Informes de Administrador      \t\t\t" << endl;
+        cout << "\t\t\t                            --- MENU ---                           \t\t\t" << endl;
+        cout << "\t\t\t__________________________________________________________________\t\t\t" << endl;
+        cout << "\t ____________________________                                      \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t|    Selecciona una opcion:  |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 1. Informe General         |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 2. Informe por Empleado    |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 3. Salir                   |                                     \t\t\t" << endl;
+        cout << "\t|____________________________|                                     \t\t\t\n\n"
+             << endl;
+        cout << "\t-------------------------------------------------------------------- \t\t\t" << endl
+             << endl;
+        cout << "\tPor favor elige una opcion: ";
+        cin >> opcion;
+        cout << "\n\n"
+             << endl;
+
+        switch (opcion)
+        {
+        case 1:
+        {
+            int indexEmpleados;
+            system("cls || clear");
+            cout << "Ingrese el mes para el informe (1-12): ";
+            cin >> mes;
+            for (int i = 0; i < numEmpleados; i++)
+            {
+                indexEmpleados = i;
+                cuantificarAsistenciasYLlegadasTardes(mes, anio, indexEmpleados);
+                
+                cout << "\n\n";
+            }
+            system("pause");
+            break;
+        }
+        case 2:
+            {
+            system("cls || clear");
+            int index = buscarEmpleado();
+            cout << "\nEl empleado buscado es: " << endl;
+            imprimirDatosEmpleado(index);
+            cout << "\n Mostrando el informe" << endl;
+            cout << "Ingrese el mes para el informe (1-12): ";
+            cin >> mes;
+            cuantificarAsistenciasYLlegadasTardes(mes, anio, index);
+            system("pause");
+            break;
+            }
+            break;
+        case 3:
+            cout << "\n Saliendo..." << endl;
+            break;
+        default:
+            cout << "\nOpcion no valida\n" << endl;
+            break;
+        }
+    } while (opcion != 3);
 }
 
 int iniciarSesionAdministrador()
