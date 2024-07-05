@@ -77,6 +77,10 @@ void menuPrincipal()
         case 3:
             cout << "Saliendo..." << endl;
             break;
+        default:
+            cout << "Opcion no valida" << endl;
+            system("pause");
+            break;
         }
 
     } while (opcion != 3);
@@ -182,6 +186,12 @@ void menuGeneralAdministrador()
         case 4:
         {
             system("cls || clear");
+            if (numEmpleados == 0)
+            {
+                cout << "No hay empleados registrados" << endl;
+                system("pause");
+                break;
+            }
             int index = buscarEmpleado();
             imprimirDatosEmpleado(index);
             system("pause");
@@ -214,7 +224,7 @@ void menuDeInformesAdministrador()
 {
     // Variables Locales
     int opcion;
-     int mes, anio = ANIOACTUAL;
+    int mes, anio = ANIOACTUAL;
 
     do
     {
@@ -248,21 +258,33 @@ void menuDeInformesAdministrador()
         {
             int indexEmpleados;
             system("cls || clear");
+            if (numEmpleados == 0)
+            {
+                cout << "No hay empleados registrados" << endl;
+                system("pause");
+                break;
+            }
             cout << "Ingrese el mes para el informe (1-12): ";
             cin >> mes;
             for (int i = 0; i < numEmpleados; i++)
             {
                 indexEmpleados = i;
                 cuantificarAsistenciasYLlegadasTardes(mes, anio, indexEmpleados);
-                
+
                 cout << "\n\n";
             }
             system("pause");
             break;
         }
         case 2:
-            {
+        {
             system("cls || clear");
+            if (numEmpleados == 0)
+            {
+                cout << "No hay empleados registrados" << endl;
+                system("pause");
+                break;
+            }
             int index = buscarEmpleado();
             cout << "\nEl empleado buscado es: " << endl;
             imprimirDatosEmpleado(index);
@@ -272,13 +294,14 @@ void menuDeInformesAdministrador()
             cuantificarAsistenciasYLlegadasTardes(mes, anio, index);
             system("pause");
             break;
-            }
-            break;
+        }
+        break;
         case 3:
             cout << "\n Saliendo..." << endl;
             break;
         default:
-            cout << "\nOpcion no valida\n" << endl;
+            cout << "\nOpcion no valida\n"
+                 << endl;
             break;
         }
     } while (opcion != 3);
