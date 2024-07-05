@@ -154,9 +154,11 @@ void menuGeneralAdministrador()
         cout << "\t|                            |                                     \t\t\t" << endl;
         cout << "\t| 5. Lista de Empleados      |                                     \t\t\t" << endl;
         cout << "\t|                            |                                     \t\t\t" << endl;
-        cout << "\t| 6. Informe de asistencias  |                                     \t\t\t" << endl;
+        cout << "\t| 6. Informe de Asistencias  |                                     \t\t\t" << endl;
         cout << "\t|                            |                                     \t\t\t" << endl;
-        cout << "\t| 7. Cerrar Sesion           |                                     \t\t\t" << endl;
+        cout << "\t| 7. Editar Hora de E/S      |                                     \t\t\t" << endl;
+        cout << "\t|                            |                                     \t\t\t" << endl;
+        cout << "\t| 8. Cerrar Sesion           |                                     \t\t\t" << endl;
         cout << "\t|____________________________|                                     \t\t\t\n\n"
              << endl;
         cout << "\t-------------------------------------------------------------------- \t\t\t" << endl
@@ -192,6 +194,11 @@ void menuGeneralAdministrador()
             // menuDeInformesAdministrador();
             break;
         case 7:
+            ingresarEntradaSalida();
+            guardarHoras();
+            leerHoras();
+            break;
+        case 8:
             cout << "Cerrando Sesion..." << endl;
             system("pause");
             break;
@@ -200,8 +207,9 @@ void menuGeneralAdministrador()
             break;
         }
 
-    } while (opcion != 7);
+    } while (opcion != 8);
 }
+
 int iniciarSesionAdministrador()
 {
     system("cls || clear");
@@ -226,13 +234,13 @@ int iniciarSesionAdministrador()
         system("pause");
         menuGeneralAdministrador();
     }
-    else{
+    else
+    {
         cout << "\t\t\t\t\tInicio de sesion fallido\n\n"
-         << endl;
-    system("pause");
+             << endl;
+        system("pause");
     }
 
-    
     return -1;
 }
 
@@ -284,6 +292,7 @@ void menuEmpleado(int index)
 {
     // Variables Locales
     int opcion;
+    int mes, anio = ANIOACTUAL;
 
     do
     {
@@ -317,18 +326,20 @@ void menuEmpleado(int index)
         {
         case 1:
             cout << "Registrar mi asistencia" << endl;
-            // Registrar la asistencia
+            registrarAsistencia(horaEntrada_t, index);
+            system("pause");
             break;
         case 2:
             cout << "Mostrar mi informe" << endl;
-            // Mostrar el informe
+            cout << "Ingrese el mes para el informe (1-12): ";
+            cin >> mes;
+            cuantificarAsistenciasYLlegadasTardes(mes, anio, index);
+            system("pause");
             break;
         case 3:
-
             imprimirDatosEmpleadoEnEmpleados(index);
             system("pause");
             break;
-
         case 4:
             system("cls || clear");
             cout << "Cerrando Sesion..." << endl;
