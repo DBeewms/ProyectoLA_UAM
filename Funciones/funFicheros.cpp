@@ -21,13 +21,13 @@ void cargarEmpleadosDesdeArchivo(const char *nombreArchivo)
     if (archivo.is_open())
     {
         archivo >> numEmpleados;
-        archivo.ignore(); // Ignorar el salto de línea después del número de empleados
+        archivo.ignore(); // Ignorar el salto de linea despues del numero de empleados
         for (int i = 0; i < numEmpleados; i++)
         {
             archivo.getline(empleados[i].nombre, MAX_STR);
             archivo.getline(empleados[i].apellido, MAX_STR);
             archivo >> empleados[i].infoUsuario.cedula;
-            archivo.ignore(); // Ignorar el salto de línea:
+            archivo.ignore(); // Ignorar el salto de linea:
             archivo.getline(empleados[i].infoUsuario.clave, SIZE_PASS + 1);
         }
         archivo.close();
@@ -38,8 +38,8 @@ void cargarEmpleadosDesdeArchivo(const char *nombreArchivo)
     }
 }
 
-    // Función para guardar empleados en el archivo
-    // Se guarda el número de empleados y los datos de cada empleado
+    // Funcion para guardar empleados en el archivo
+    // Se guarda el numero de empleados y los datos de cada empleado
     // Importante para editar y eliminar empleados
 void guardarEmpleadosEnArchivo(const char *nombreArchivo)
 {

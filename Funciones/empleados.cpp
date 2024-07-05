@@ -45,14 +45,14 @@ void registrarAsistencia(time_t horaEntrada_t, int indexEmpleado)
     // Convierte a una estructura tm que representa la fecha y tiempo de un calendario
     tm *now_tm = localtime(&now_time_t);
 
-    // Representación textual de una fecha y hora para mostrarla al usuario
-    char formatted_date[11]; // Aumentamos el tamaño para el terminador de cadena
+    // Representacion textual de una fecha y hora para mostrarla al usuario
+    char formatted_date[11]; 
     strftime(formatted_date, sizeof(formatted_date), "%d-%m-%Y", now_tm);
 
-    char formatted_hora[9]; // Aumentamos el tamaño para el terminador de cadena
+    char formatted_hora[9]; 
     strftime(formatted_hora, sizeof(formatted_hora), "%H:%M:%S", now_tm);
 
-    // Tomar el formato de la hora local para el cálculo de la diferencia
+    // Tomar el formato de la hora local para el calculo de la diferencia
     tm formatoHoraActual_tm = *now_tm;
     int horas, minutos, segundos;
     sscanf(formatted_hora, "%d:%d:%d", &horas, &minutos, &segundos);
@@ -74,7 +74,7 @@ void registrarAsistencia(time_t horaEntrada_t, int indexEmpleado)
     // Lapso de tiempo de 5 min para la tolerancia
     double tolerancia = 5.0;
 
-    // Encontrar la posición vacía en el arreglo de Fechas
+    // Encontrar la posicion vacia en el arreglo de Fechas
     for (int i = 0; i < MAX_FECHAS; i++)
     {
         if (empleados[indexEmpleado].arreglosFechas[i].fechaRegistrada[0] == '\0')
@@ -85,7 +85,7 @@ void registrarAsistencia(time_t horaEntrada_t, int indexEmpleado)
     }
     if (indexFechas == -1)
     {
-        cout << "Lo lamentamos, el registro de fechas ha alcanzado su límite" << endl;
+        cout << "Lo lamentamos, el registro de fechas ha alcanzado su limite" << endl;
         return;
     }
 
@@ -119,14 +119,14 @@ void registrarAsistencia(time_t horaEntrada_t, int indexEmpleado)
 
     if (!archivo.is_open())
     {
-        cout << "Error al abrir o crear el archivo para el empleado con cédula: " << empleados[indexEmpleado].infoUsuario.cedula << endl;
+        cout << "Error al abrir o crear el archivo para el empleado con cedula: " << empleados[indexEmpleado].infoUsuario.cedula << endl;
         return;
     }
 
-    // Si el archivo no existía, añadir cabecera
+    // Si el archivo no existia, añadir cabecera
     if (!archivoExiste)
     {
-        archivo << "Fecha,Hora,Asistencia,Llegada,Mes de la fecha,Días del mes\n";
+        archivo << "Fecha,Hora,Asistencia,Llegada,Mes de la fecha,Dias del mes\n";
     }
 
     // Escribir los datos en formato CSV
@@ -153,7 +153,7 @@ void cargarFechasDesdeCSV(int indexEmpleado)
     ifstream archivo(nombreArchivo);
     if (!archivo.is_open())
     {
-        cout << "No se pudo abrir el archivo para el empleado con cédula: " << cedulaTemp << endl;
+        cout << "No se pudo abrir el archivo para el empleado con cedula: " << cedulaTemp << endl;
         return;
     }
 
@@ -197,13 +197,13 @@ void cargarFechasDesdeCSV(int indexEmpleado)
                 }
 
                 campoActual++;
-                bufferIndex = 0; // Resetear el índice para el siguiente campo
+                bufferIndex = 0; // Resetear el indice para el siguiente campo
                 if (linea[i] == '\n')
-                    break; // Si es el final de la línea, salir del bucle
+                    break; // Si es el final de la linea, salir del bucle
             }
             else
             {
-                campoBuffer[bufferIndex++] = linea[i]; // Agregar el carácter actual al buffer
+                campoBuffer[bufferIndex++] = linea[i]; // Agregar el caracter actual al buffer
             }
         }
 
@@ -212,11 +212,11 @@ void cargarFechasDesdeCSV(int indexEmpleado)
         {
             if (strcmp(empleados[i].infoUsuario.cedula, cedulaTemp) == 0)
             {
-                // Encontrar una posición libre en el arreglo de fechas
+                // Encontrar una posicion libre en el arreglo de fechas
                 for (int j = 0; j < MAX_FECHAS; j++)
                 {
                     if (empleados[i].arreglosFechas[j].fechaRegistrada[0] == '\0')
-                    { // Si la fecha está vacía, asignar la fecha
+                    { // Si la fecha esta vacia, asignar la fecha
                         empleados[i].arreglosFechas[j] = fecha;
                         break;
                     }
@@ -234,7 +234,7 @@ void cargarFechasParaTodosLosEmpleados()
     for (int i = 0; i < MAX_EMPLEADOS; i++)
     {
         if (empleados[i].infoUsuario.cedula[0] != '\0')
-        { // Asumiendo que una cédula no vacía indica un empleado válido
+        { // Asumiendo que una cedula no vacia indica un empleado valido
             cargarFechasDesdeCSV(i);
         }
     }

@@ -1,6 +1,6 @@
 Nombre: Diego Mora Diego Mora
-Mes: 7 Año: 2024
-Días del mes: 31
+Mes: 7 Anio: 2024
+Dias del mes: 31
 Total de asistencias en el mes: 1
 Total de llegadas tardes en el mes: 0
-Proporción de asistencias: 1/31
+Proporcion de asistencias: 1/31

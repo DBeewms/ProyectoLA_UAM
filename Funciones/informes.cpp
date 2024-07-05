@@ -39,20 +39,20 @@ void ingresarEntradaSalida()
         cout << "Hora de entrada (HH:MM:SS): ";
         cin >> horaEntrada_str;
         if (horaEntrada_str[0] == '\0')
-        { // Si la cadena está vacía, limpia el buffer
+        { // Si la cadena esta vacia, limpia el buffer
             cin.ignore(10000, '\n');
         }
-    } while (horaEntrada_str[0] == '\0'); // Repite si la cadena está vacía
+    } while (horaEntrada_str[0] == '\0'); // Repite si la cadena esta vacia
 
     do
     {
         cout << "Hora de salida (HH:MM:SS): ";
         cin >> horaSalida_str;
         if (horaSalida_str[0] == '\0')
-        { // Si la cadena está vacía, limpia el buffer
+        { // Si la cadena esta vacia, limpia el buffer
             cin.ignore(10000, '\n');
         }
-    } while (horaSalida_str[0] == '\0'); // Repite si la cadena está vacía
+    } while (horaSalida_str[0] == '\0'); // Repite si la cadena esta vacia
 
     // Parsear la hora de entrada y salida a tm
     tm horaEntrada_tm = *now_tm, horaSalida_tm = *now_tm;
@@ -64,7 +64,7 @@ void ingresarEntradaSalida()
     horaSalida_t = mktime(&horaSalida_tm);
 }
 
-// Función para guardar las horas en un archivo usando char[]
+// Funcion para guardar las horas en un archivo usando char[]
 void guardarHoras()
 {
     ofstream file("horaEntradaSalida.txt");
@@ -85,7 +85,7 @@ void guardarHoras()
     }
 }
 
-// Función para leer las horas desde un archivo usando char[] y time_t
+// Funcion para leer las horas desde un archivo usando char[] y time_t
 void leerHoras()
 {
     ifstream file("horaEntradaSalida.txt");
@@ -121,24 +121,24 @@ void cuantificarAsistenciasYLlegadasTardes(int mes, int anio, int indexEmpleado)
         }
     }
 
-    // Creación del nombre del archivo
+    // Creacion del nombre del archivo
     char nombreArchivo[60];
     strcpy(nombreArchivo, "informe");
-    strcat(nombreArchivo, empleados[indexEmpleado].infoUsuario.cedula); // Concatenar la cédula
-    strcat(nombreArchivo, ".txt");                                      // Concatenar la extensión del archivo
+    strcat(nombreArchivo, empleados[indexEmpleado].infoUsuario.cedula); // Concatenar la cedula
+    strcat(nombreArchivo, ".txt");                                      // Concatenar la extension del archivo
 
-    // Creación y apertura del archivo
+    // Creacion y apertura del archivo
     ofstream archivo(nombreArchivo);
 
     if (archivo.is_open())
     {
         // Escribir datos en el archivo
         archivo << "Nombre: " << empleados[indexEmpleado].nombre << " " << empleados[indexEmpleado].apellido << endl;
-        archivo << "Mes: " << mes << " Año: " << anio << endl;
-        archivo << "Días del mes: " << diasDelMes << endl;
+        archivo << "Mes: " << mes << " Anio: " << anio << endl;
+        archivo << "Dias del mes: " << diasDelMes << endl;
         archivo << "Total de asistencias en el mes: " << totalAsistencias << endl;
         archivo << "Total de llegadas tardes en el mes: " << totalLlegadasTardes << endl;
-        archivo << "Proporción de asistencias: " << totalAsistencias << "/" << diasDelMes << endl;
+        archivo << "Proporcion de asistencias: " << totalAsistencias << "/" << diasDelMes << endl;
         archivo.close(); // Cerrar el archivo
     }
     else
@@ -146,13 +146,13 @@ void cuantificarAsistenciasYLlegadasTardes(int mes, int anio, int indexEmpleado)
         cout << "No se pudo abrir el archivo para escritura." << endl;
     }
 
-    // También mostrar los datos en consola
+    // Tambien mostrar los datos en consola
     cout << "Nombre: " << empleados[indexEmpleado].nombre << " " << empleados[indexEmpleado].apellido << endl;
-    cout << "Mes: " << mes << " Año: " << anio << endl;
-    cout << "Días del mes: " << diasDelMes << endl;
+    cout << "Mes: " << mes << " Anio: " << anio << endl;
+    cout << "Dias del mes: " << diasDelMes << endl;
     cout << "Total de asistencias en el mes: " << totalAsistencias << endl;
     cout << "Total de llegadas tardes en el mes: " << totalLlegadasTardes << endl;
-    cout << "Proporción de asistencias: " << totalAsistencias << "/" << diasDelMes << endl;
+    cout << "Proporcion de asistencias: " << totalAsistencias << "/" << diasDelMes << endl;
 }
 
 // Devuelve el dia de la semana
